@@ -1,0 +1,4 @@
+testbench:
+    sqls:
+        - %testDir%/dump.sql
+        - %testDir%/dataset.sql

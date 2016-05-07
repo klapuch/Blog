@@ -1,0 +1,14 @@
+extensions:
+    console: Kdyby\Console\DI\ConsoleExtension
+    events: Kdyby\Events\DI\EventsExtension
+    annotations: Kdyby\Annotations\DI\AnnotationsExtension
+    doctrine: Kdyby\Doctrine\DI\OrmExtension
+
+doctrine:
+    user: root
+    password:
+    charset: UTF8
+    driver: pdo_mysql
+    defaultTableOptions:
+        collate: utf8_czech_ci
+    options: [PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
