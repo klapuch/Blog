@@ -22,3 +22,7 @@ INSERT INTO inbox (sender, subject, content, `date`, state) VALUES
 ("fooSender", "fooSubject", "fooContent", NOW() - INTERVAL 1 DAY, "read"),
 ("fooSender", "fooSubject", "fooContent", NOW(), "unread"),
 ("fooSender", "fooSubject", "fooContent", NOW() - INTERVAL 2 DAY, "unread");
+
+INSERT INTO article_slugs (origin, name) VALUES
+(1, "footitle"),
+(2, "bartitle");
