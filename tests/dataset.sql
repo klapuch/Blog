@@ -20,4 +20,5 @@ INSERT INTO comments (author, article_id, `date`, content, visible) VALUES
 INSERT INTO inbox (sender, subject, content, `date`, state) VALUES
 ("some Sender", "some Subject", "some Content", NOW(), "spam"),
 ("fooSender", "fooSubject", "fooContent", NOW() - INTERVAL 1 DAY, "read"),
+("fooSender", "fooSubject", "fooContent", NOW(), "unread"),
 ("fooSender", "fooSubject", "fooContent", NOW() - INTERVAL 2 DAY, "unread");

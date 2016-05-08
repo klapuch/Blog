@@ -25,20 +25,21 @@ final class ImportantInbox extends TestCase\Database {
 
     public function testPutting() {
         $message = $this->inbox->put('ssubject', 'ccontent', 'ssender');
-        Assert::same(4, $message->id());
-        Assert::same(4, $this->inbox->count());
+        Assert::same(5, $message->id());
+        Assert::same(5, $this->inbox->count());
     }
 
     public function testCounting() {
-        Assert::same(3, $this->inbox->count());
+        Assert::same(4, $this->inbox->count());
     }
 
     public function testIterating() {
         $inbox = $this->inbox->iterate();
-        Assert::same(3, count($inbox));
+        Assert::same(4, count($inbox));
         Assert::same(3, $inbox[0]->id());
-        Assert::same(2, $inbox[1]->id());
-        Assert::same(1, $inbox[2]->id());
+        Assert::same(4, $inbox[1]->id());
+        Assert::same(2, $inbox[2]->id());
+        Assert::same(1, $inbox[3]->id());
     }
 
     public function testMessage() {
