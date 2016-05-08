@@ -8,8 +8,9 @@ namespace Facedown\Model\Integration;
 use Tester,
     Tester\Assert;
 use Facedown\{
-    Fake, Model, TestCase
+    Model, TestCase
 };
+use Facedown\Model\Fake;
 use Nette\Security;
 
 require __DIR__ . '/../../bootstrap.php';

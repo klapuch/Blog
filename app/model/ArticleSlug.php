@@ -19,7 +19,7 @@ class ArticleSlug implements Slug {
     /**
      * @var Article
      * @ORM\OneToOne(targetEntity="Article")
-     * @ORM\JoinColumn(name="origin", referencedColumnName="ID")
+     * @ORM\JoinColumn(name="origin", referencedColumnName="ID", unique=true)
      */
     private $article;
 

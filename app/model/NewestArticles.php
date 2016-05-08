@@ -4,7 +4,8 @@ namespace Facedown\Model;
 use Nette,
     Nette\Security;
 use Kdyby\Doctrine;
-use Facedown\Exception;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Facedown\Exception\ExistenceException;
 
 final class NewestArticles extends Nette\Object implements Articles {
     private $entities;
@@ -24,20 +25,29 @@ final class NewestArticles extends Nette\Object implements Articles {
     }
 
     public function publish(string $title, string $content): Article {
-        $article = new Article(
-            $title,
-            $content,
-            $this->users->user($this->myself->getId())
-        );
-        $this->entities->persist($article);
-        $this->entities->flush();
-        return $article;
+        try {
+            $article = new Article(
+                $title,
+                $content,
+                $this->users->user($this->myself->getId())
+            );
+            $this->entities->persist($article);
+            $this->entities->flush();
+            return $article;
+        } catch(UniqueConstraintViolationException $ex) {
+            throw new ExistenceException(
+                sprintf(
+                    'Titulek %s již existuje',
+                    $title
+                )
+            );
+        }
     }
 
     public function article(int $id): Article {
         $article = $this->articles->find($id);
         if($article === null)
-            throw new Exception\ExistenceException('Článek neexistuje');
+            throw new ExistenceException('Článek neexistuje');
         return $article;
     }
 

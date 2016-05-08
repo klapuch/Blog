@@ -33,6 +33,8 @@ forms:
 services:
     router: Facedown\Router\RouterFactory::createRouter
     texy: Texy\Texy
+    identity: @Facedown\Model\Access\IdentityFactory::create()
+    - Facedown\Model\Access\IdentityFactory
     latte.latteFactory:
         setup:
             - addFilter('texy', [@texy, process])

@@ -12,3 +12,4 @@ doctrine:
     defaultTableOptions:
         collate: utf8_czech_ci
     options: [PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    autoGenerateProxyClasses: false

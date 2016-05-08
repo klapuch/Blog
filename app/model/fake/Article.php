@@ -1,5 +1,5 @@
 <?php
-namespace Facedown\Fake;
+namespace Facedown\Model\Fake;
 
 use Facedown\Model;
 

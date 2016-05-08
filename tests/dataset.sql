@@ -1,6 +1,7 @@
 INSERT INTO articles (title, content, `date`, user_id) VALUES
 ("fooTitle", "fooContent", "2005-01-01 01:01:01", 2),
-("barTitle", "barContent", "2006-01-01 01:01:01", 1);
+("barTitle", "barContent", "2006-01-01 01:01:01", 1),
+("blabla", "blablaContent", "2004-01-01 01:01:01", 1);
 
 INSERT INTO roles (name) VALUES
 ("creator"),

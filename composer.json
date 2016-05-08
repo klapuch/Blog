@@ -15,7 +15,7 @@
     "tracy/tracy": "~2.3.0",
     "kdyby/doctrine": "^3.1",
     "mrtnzlml/testbench": "^2.1",
-    "dg/texy": "^2.8"
+    "texy/texy": "^2.8"
   },
   "require-dev": {
     "nette/tester": "~1.3"

@@ -1,5 +1,5 @@
 <?php
-namespace Facedown\Fake;
+namespace Facedown\Model\Fake;
 
 use Nette\Security;
 
@@ -7,7 +7,7 @@ final class Identity implements Security\IIdentity {
     private $id;
     private $roles;
 
-    public function __construct(int $id = null, array $roles = []) {
+    public function __construct(int $id = 0, array $roles = []) {
         $this->id = $id;
         $this->roles = $roles;
     }

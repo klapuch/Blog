@@ -8,8 +8,9 @@ namespace Facedown\Model\Integration;
 use Tester,
     Tester\Assert;
 use Facedown\{
-    Fake, Model, TestCase
+    Model, TestCase
 };
+use Facedown\Model\Fake;
 use Nette\Security;
 
 require __DIR__ . '/../../bootstrap.php';
@@ -42,9 +43,17 @@ final class ArticleSlugs extends TestCase\Database {
     }
 
     public function testAdding() {
-        $slug = $this->slugs->add(2, 'bla-bla');
-        Assert::same(2, $slug->origin());
+        $slug = $this->slugs->add(3, 'bla-bla');
+        Assert::same(3, $slug->origin());
         Assert::same('bla-bla', (string)$slug);
+    }
+
+    /**
+     * @throws \Facedown\Exception\ExistenceException Tento slug již existuje
+     */
+    public function testAddingDuplicate() {
+        $this->slugs->add(2, 'bla-bla');
+        $this->slugs->add(3, 'bla-bla');
     }
 }
 

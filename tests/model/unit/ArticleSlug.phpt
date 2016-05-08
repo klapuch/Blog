@@ -7,9 +7,8 @@ namespace Facedown\Model\Unit;
 
 use Tester,
     Tester\Assert;
-use Facedown\{
-    Fake, Model
-};
+use Facedown\Model;
+use Facedown\Model\Fake;
 
 require __DIR__ . '/../../bootstrap.php';
 

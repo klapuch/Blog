@@ -2,7 +2,8 @@
 namespace Facedown\Model;
 
 use Kdyby\Doctrine;
-use Facedown\Exception;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Facedown\Exception\ExistenceException;
 
 final class ArticleSlugs implements Slugs {
     private $entities;
@@ -21,17 +22,21 @@ final class ArticleSlugs implements Slugs {
     public function slug(string $name): Slug {
         $slug = $this->slugs->findOneByName($name);
         if($slug === null)
-            throw new Exception\ExistenceException('Slug neexistuje');
+            throw new ExistenceException('Slug neexistuje');
         return $slug;
     }
 
     public function add(int $origin, string $name): Slug {
-        $slug = new ArticleSlug(
-            $this->articles->article($origin),
-            $name
-        );
-        $this->entities->persist($slug);
-        $this->entities->flush();
-        return $slug;
+        try {
+            $slug = new ArticleSlug(
+                $this->articles->article($origin),
+                $name
+            );
+            $this->entities->persist($slug);
+            $this->entities->flush();
+            return $slug;
+        } catch(UniqueConstraintViolationException $ex) {
+            throw new ExistenceException('Tento slug již existuje');
+        }
     }
 }

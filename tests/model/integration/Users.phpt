@@ -8,8 +8,9 @@ namespace Facedown\Model\Integration;
 use Tester,
     Tester\Assert;
 use Facedown\{
-    Fake, Model, TestCase
+    Model, TestCase
 };
+use Facedown\Model\Fake;
 use Nette\Security;
 
 require __DIR__ . '/../../bootstrap.php';
@@ -44,6 +45,14 @@ final class Users extends TestCase\Database {
      */
     public function testUnknownUser() {
         $this->users->user(666);
+    }
+
+    /**
+     * @throws \Facedown\Exception\ExistenceException Uživatelské jméno newUser již existuje
+     */
+    public function testRegisteringDuplicate() {
+        $this->users->register('newUser', 'secret :)');
+        $this->users->register('newUser', 'secret :)');
     }
 }
 

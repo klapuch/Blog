@@ -8,8 +8,9 @@ namespace Facedown\Model\Integration\Access;
 use Tester,
     Tester\Assert;
 use Facedown\{
-    Fake, Model, TestCase
+    Model, TestCase
 };
+use Facedown\Model\Fake;
 use Facedown\Model\Access;
 use Nette\Security;
 

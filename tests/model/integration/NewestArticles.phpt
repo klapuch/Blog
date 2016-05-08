@@ -8,8 +8,9 @@ namespace Facedown\Model\Integration;
 use Tester,
     Tester\Assert;
 use Facedown\{
-    Fake, Model, TestCase
+    Model, TestCase
 };
+use Facedown\Model\Fake;
 use Nette\Security;
 
 require __DIR__ . '/../../bootstrap.php';
@@ -28,7 +29,7 @@ final class NewestArticles extends TestCase\Database {
     }
 
     public function testCounting() {
-        Assert::same(2, $this->articles->count());
+        Assert::same(3, $this->articles->count());
     }
 
     public function testArticle() {
@@ -52,14 +53,15 @@ final class NewestArticles extends TestCase\Database {
 
     public function testIterating() {
         $articles = $this->articles->iterate();
-        Assert::same(2, count($articles));
+        Assert::same(3, count($articles));
         Assert::same($articles[0]->id(), 2);
         Assert::same($articles[1]->id(), 1);
+        Assert::same($articles[2]->id(), 3);
     }
 
     public function testPublishing() {
         $publishedArticle = $this->articles->publish('newTitle', 'newContent');
-        Assert::same(3, $publishedArticle->id());
+        Assert::same(4, $publishedArticle->id());
         Assert::same('newTitle', $publishedArticle->title());
         Assert::same('newContent', $publishedArticle->content());
         Assert::same(
@@ -67,7 +69,14 @@ final class NewestArticles extends TestCase\Database {
             $publishedArticle->date()->format('j.n.Y')
         );
         Assert::same(1, $publishedArticle->author()->id());
+    }
 
+    /**
+     * @throws \Facedown\Exception\ExistenceException Titulek newTitle již existuje
+     */
+    public function testPublishingDuplicate() {
+        $this->articles->publish('newTitle', 'newContent');
+        $this->articles->publish('newTitle', 'newContent');
     }
 }
 
