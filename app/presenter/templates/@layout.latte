@@ -34,7 +34,9 @@
                     <li title="Články"><a n:href="Clanky:">Články</a></li>
                     <li title="O mně"><a n:href="OMne:">O mně</a></li>
                     <li title="Kontakt"><a n:href="Kontakt:">Kontakt</a></li>
-                    <li title="Pošta"><a n:href="Posta:">Pošta</a></li>
+                    {if $user->isAllowed('Posta')}
+                        <li title="Pošta"><a n:href="Posta:">Pošta</a></li>
+                    {/if}
                     {if $user->loggedIn}
                         <li title="Odhlásit se"><a n:href="Odhlasit:">Odhlásit se</a></li>
                     {else}

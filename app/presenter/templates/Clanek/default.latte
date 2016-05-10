@@ -32,9 +32,11 @@
         {else}
             <p><em>Komentář byl smazán správcem webu</em></p>
         {/if}
-        <a n:href="Komentar:smazat id => $comment->id(), articleId => $article->id()">
-            <button type="button" class="btn btn-danger">Smazat</button>
-        </a>
+        {if $user->isAllowed('Komentar', 'smazat')}
+            <a n:href="Komentar:smazat id => $comment->id(), articleId => $article->id()">
+                <button type="button" class="btn btn-danger">Smazat</button>
+            </a>
+        {/if}
     </div>
     <br/>
 {/foreach}
