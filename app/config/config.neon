@@ -1,3 +1,5 @@
+includes:
+    - acl.neon
 parameters:
 
 php:
@@ -8,7 +10,7 @@ php:
     session.name: SESSION
     error_reporting: 1
 application:
-    errorPresenter: Error
+    errorPresenter: Chyba
     mapping:
         *: Facedown\*Module\Presenter\*Presenter
 session:
@@ -34,6 +36,8 @@ services:
     router: Facedown\Router\RouterFactory::createRouter
     texy: Texy\Texy
     identity: @Facedown\Model\Access\IdentityFactory::create()
+    authenticator: Facedown\Model\Access\Authenticator
+    - Nette\Security\Passwords
     - Facedown\Model\Access\IdentityFactory
     latte.latteFactory:
         setup:

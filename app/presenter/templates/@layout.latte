@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="robots" content="index, follow">
-    <link href="images/favicon32.png" rel="icon" type="image/png"/>
+    <link href="{$basePath}/images/favicon32.png" rel="icon" type="image/png"/>
     <title>{ifset title}{include title|striptags|trim}{/ifset}</title>
     <meta name="description" content="{ifset description}{include description|striptags|trim|truncate:150}"{/ifset}>
     <meta name="author" content="Facedown"/>
@@ -27,19 +27,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="" title="Facedown"><strong>Facedown</strong></a>
+                <a class="navbar-brand" n:href="Default:" title="Facedown"><strong>Facedown</strong></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li title="Přehled"><a href="prehled">Přehled</a></li>
-                    <li title="Články"><a href="clanky">Články</a></li>
-                    <li title="O mně"><a href="o-mne">O mně</a></li>
-                    <li title="Kontakt"><a href="kontakt">Kontakt</a></li>
-                    <li title="Odhlásit se"><a
-                                href="odhlasit/">Odhlásit
-                            se</a></li>
-                    <li title="Přihlásit se"><a href="prihlasit">Přihlásit
-                            se</a></li>
+                    <li title="Články"><a n:href="Clanky:">Články</a></li>
+                    <li title="O mně"><a n:href="OMne:">O mně</a></li>
+                    <li title="Kontakt"><a n:href="Kontakt:">Kontakt</a></li>
+                    <li title="Pošta"><a n:href="Posta:">Pošta</a></li>
+                    {if $user->loggedIn}
+                        <li title="Odhlásit se"><a n:href="Odhlasit:">Odhlásit se</a></li>
+                    {else}
+                        <li title="Přihlásit se"><a n:href="Prihlasit:">Přihlásit se</a></li>
+                    {/if}
                 </ul>
             </div>
         </div>
@@ -58,7 +58,7 @@
 <div id="footer">
     <div class="container">
         <p class="muted credit text-center">
-            Vytvořil <a href="http://www.facedown.cz"
+            Vytvořil <a href="https://www.github.com/klapuch"
                         title="Facedown">Facedown</a>
         </p>
     </div>

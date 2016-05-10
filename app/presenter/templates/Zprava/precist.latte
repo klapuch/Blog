@@ -1,0 +1,20 @@
+{block content}
+{define title}{$message->subject()}{/define}
+<div class="well">
+	<div class="page-header">
+		<h1>{$message->subject()} <small title="Datum přijetí">{$message->date()->format('j.n.Y H:i')}</small></h1>
+	</div>
+	<p><strong>Odesilatel:</strong> {$message->sender()}</p>
+	<p>{$message->content()|noescape|texy}</p>
+	<div class="form-group">
+		<a n:href="Zprava:oznacit id => $message->id(), state => read">
+			<button type="button" class="btn btn-success">Přečteno</button>
+		</a>
+		<a n:href="Zprava:oznacit id => $message->id(),  state => spam">
+			<button type="button" class="btn btn-danger">Spam</button>
+		</a>
+		<a n:href="Zprava:oznacit  id => $message->id(), state => unread">
+			<button type="button" class="btn btn-info">Nepřečteno</button>
+		</a>
+	</div>
+</div>

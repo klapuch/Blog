@@ -5,7 +5,7 @@ use Nette;
 use Tracy\ILogger;
 
 
-class ErrorPresenter extends Nette\Object implements Nette\Application\IPresenter
+class ChybaPresenter extends Nette\Object implements Nette\Application\IPresenter
 {
 	/** @var ILogger */
 	private $logger;
@@ -26,12 +26,12 @@ class ErrorPresenter extends Nette\Object implements Nette\Application\IPresente
 
 		if ($e instanceof Nette\Application\BadRequestException) {
 			// $this->logger->log("HTTP code {$e->getCode()}: {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", 'access');
-			return new Nette\Application\Responses\ForwardResponse($request->setPresenterName('Error4xx'));
+			return new Nette\Application\Responses\ForwardResponse($request->setPresenterName('Chyba4xx'));
 		}
 
 		$this->logger->log($e, ILogger::EXCEPTION);
 		return new Nette\Application\Responses\CallbackResponse(function () {
-			require __DIR__ . '/templates/Error/500.phtml';
+			require __DIR__ . '/templates/Chyba/500.phtml';
 		});
 	}
 

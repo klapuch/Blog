@@ -3,7 +3,7 @@ namespace Facedown\Presenter;
 
 use Nette;
 
-class Error4xxPresenter extends BasePresenter
+class Chyba4xxPresenter extends BasePresenter
 {
 
 	public function startup()
@@ -18,8 +18,8 @@ class Error4xxPresenter extends BasePresenter
 	public function renderDefault(Nette\Application\BadRequestException $exception)
 	{
 		// load template 403.latte or 404.latte or ... 4xx.latte
-		$file = __DIR__ . "/templates/Error/{$exception->getCode()}.latte";
-		$this->template->setFile(is_file($file) ? $file : __DIR__ . '/templates/Error/4xx.latte');
+		$file = __DIR__ . "/templates/Chyba/{$exception->getCode()}.latte";
+		$this->template->setFile(is_file($file) ? $file : __DIR__ . '/templates/Chyba/4xx.latte');
 	}
 
 }
