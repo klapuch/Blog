@@ -40,7 +40,7 @@ final class ArticleSlugs extends TestCase\Database {
     }
 
     /**
-     * @throws \Facedown\Exception\ExistenceException Slug neexistuje
+     * @throws \Facedown\Exception\ExistenceException Slug fooBar neexistuje
      */
     public function testUnknownSlugName() {
         $this->slugs->slug('fooBar');
