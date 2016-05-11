@@ -66,9 +66,9 @@ class Role {
         return $this;
     }
 
-    private function change(int $rank) {
-        $this->name = array_flip($this->roles)[$this->rank() + $rank];
-        $this->rank = $this->rank() + $rank;
+    private function change(int $increment) {
+        $this->name = array_flip($this->roles)[$this->rank() + $increment];
+        $this->rank = $this->rank() + $increment;
     }
 
     public function __toString() {
