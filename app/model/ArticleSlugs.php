@@ -19,10 +19,19 @@ final class ArticleSlugs implements Slugs {
         $this->slugs = $entities->getRepository(ArticleSlug::class);
     }
 
-    public function slug(string $name): Slug {
-        $slug = $this->slugs->findOneByName($name);
-        if($slug === null)
-            throw new ExistenceException('Slug neexistuje');
+    public function slug($identifier): Slug {
+        if(is_string($identifier))
+            $slug = $this->slugs->findOneByName($identifier);
+        else
+            $slug = $this->slugs->findOneByOrigin($identifier);
+        if($slug === null) {
+            throw new ExistenceException(
+                sprintf(
+                    'Slug %s neexistuje',
+                    (string)$identifier
+                )
+            );
+        }
         return $slug;
     }
 

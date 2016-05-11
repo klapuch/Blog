@@ -35,6 +35,10 @@ final class ArticleSlugs extends TestCase\Database {
         Assert::same(1, $this->slugs->slug('footitle')->origin());
     }
 
+    public function testSlugByOrigin() {
+        Assert::same('bartitle', (string)$this->slugs->slug(2));
+    }
+
     /**
      * @throws \Facedown\Exception\ExistenceException Slug neexistuje
      */

@@ -21,7 +21,7 @@ class ArticleSlug implements Slug {
      * @ORM\OneToOne(targetEntity="Article")
      * @ORM\JoinColumn(name="origin", referencedColumnName="ID", unique=true)
      */
-    private $article;
+    private $origin;
 
     /**
      * @var string
@@ -30,12 +30,12 @@ class ArticleSlug implements Slug {
     private $name;
 
     public function __construct(Article $article, string $name) {
-        $this->article = $article;
+        $this->origin = $article;
         $this->name = $name;
     }
 
     public function origin(): int {
-        return $this->article->id();
+        return $this->origin->id();
     }
 
     public function __toString() {

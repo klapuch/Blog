@@ -33,7 +33,7 @@ forms:
         FILLED: "%label je pole, které musíte vyplnit"
         PROTECTION: "Prosím, proveďte operaci znova, došlo k vypršení časového limitu"
 services:
-    router: Facedown\Router\RouterFactory::createRouter
+    router: Facedown\Router\RouterFactory(@Kdyby\Doctrine\EntityManager)::createRouter
     texy: Texy\Texy
     identity: @Facedown\Model\Access\IdentityFactory::create()
     authenticator: Facedown\Model\Access\Authenticator
