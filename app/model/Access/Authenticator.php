@@ -25,7 +25,7 @@ class Authenticator implements Security\IAuthenticator {
         if($user === null)
             throw new Security\AuthenticationException('Uživatel neexistuje');
         elseif(!$this->passwords->verify($plainPassword, $user->password()))
-            throw new Security\AuthenticationException('Špatné heslo');
+            throw new Security\AuthenticationException('Nesprávné heslo');
         if($this->passwords->needsRehash($user->password(), ['cost' => 12])) {
             $user->changePassword(
                 $this->passwords->hash(
