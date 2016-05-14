@@ -23,14 +23,14 @@ final class Users extends TestCase\Database {
         parent::setUp();
         $this->users = new Model\Users(
             $this->entities,
-            new Fake\Passwords
+            new Fake\Cipher
         );
     }
 
     public function testRegistration() {
         $registeredUser = $this->users->register('newUser', 'secret :)');
         Assert::same(3, $registeredUser->id());
-        Assert::same('hashed', $registeredUser->password());
+        Assert::same('encrypted', $registeredUser->password());
         Assert::same('newUser', $registeredUser->username());
         Assert::same('member', (string)$registeredUser->role());
     }

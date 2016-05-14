@@ -1,23 +1,22 @@
 <?php
 namespace Facedown\Model;
 
-use Nette,
-    Nette\Security;
+use Nette;
 use Kdyby\Doctrine;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Facedown\Exception\ExistenceException;
 
 final class Users extends Nette\Object {
     private $entities;
-    private $passwords;
+    private $cipher;
     private $users;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Security\Passwords $passwords
+        Security\Cipher $cipher
     ) {
         $this->entities = $entities;
-        $this->passwords = $passwords;
+        $this->cipher = $cipher;
         $this->users = $entities->getRepository(User::class);
     }
 
@@ -25,7 +24,7 @@ final class Users extends Nette\Object {
         try {
             $user = new User(
                 $username,
-                $this->passwords->hash($password, ['cost' => 12]),
+                $this->cipher->encrypt($password),
                 $this->entities->getRepository(Role::class)->findOneByName('member')
             );
             $this->entities->persist($user);

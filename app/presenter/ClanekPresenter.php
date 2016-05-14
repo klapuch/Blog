@@ -71,7 +71,10 @@ final class ClanekPresenter extends BasePresenter {
         try {
             return (new Model\NewestArticles(
                 $this->entities,
-                new Model\Users($this->entities, new Security\Passwords),
+                new Model\Users(
+                    $this->entities,
+                    new Model\Security\Bcrypt(new Security\Passwords)
+                ),
                 $this->identity
             ))->article($this->getParameter('id'));
         } catch(Exception\ExistenceException $ex) {

@@ -56,7 +56,10 @@ final class ClankyPresenter extends BasePresenter {
     private function articles() {
         return new Model\NewestArticles(
             $this->entities,
-            new Model\Users($this->entities, new Security\Passwords),
+            new Model\Users(
+                $this->entities,
+                new Model\Security\Bcrypt(new Security\Passwords)
+            ),
             $this->identity
         );
     }

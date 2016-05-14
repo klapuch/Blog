@@ -25,7 +25,7 @@ final class ArticleSlugs extends TestCase\Database {
             $this->entities,
             new Model\NewestArticles(
                 $this->entities,
-                new Model\Users($this->entities, new Fake\Passwords),
+                new Model\Users($this->entities, new Fake\Cipher),
                 new Fake\Identity(1)
             )
         );
