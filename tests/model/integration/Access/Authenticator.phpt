@@ -20,7 +20,7 @@ final class Authenticator extends TestCase\Database {
     public function testSuccessfulAuthentication() {
         $authenticator = new Access\Authenticator(
             $this->entities,
-            new Fake\Passwords($verify = true)
+            new Fake\Cipher($decrypt = true)
         );
         $identity = $authenticator->authenticate(
             [0 => 'facedown', 1 => 'somePassword']
@@ -35,47 +35,39 @@ final class Authenticator extends TestCase\Database {
     public function testUnknownUsername() {
         (new Access\Authenticator(
             $this->entities,
-            new Fake\Passwords($verify = true)
+            new Fake\Cipher($decrypt = true)
         ))->authenticate([0 => 'fooBar', 1 => 'xxxx']);
     }
 
     /**
-     * @throws \Nette\Security\AuthenticationException Špatné heslo
+     * @throws \Nette\Security\AuthenticationException Nesprávné heslo
      */
     public function testWrongPassword() {
         (new Access\Authenticator(
             $this->entities,
-            new Fake\Passwords($verify = false)
-        ))->authenticate([0 => 'facedown', 1 => 'based on $verify variable']);
+            new Fake\Cipher($decrypt = false)
+        ))->authenticate([0 => 'facedown', 1 => 'based on $decrypt variable']);
     }
 
     public function testRehashing() {
-        $passwords = new Security\Passwords;
+        $cipher = new Fake\Cipher($decrypt = true, $deprecated = true);
         $facedownId = 1;
-        $plainPassword = 'somePass';
-        $facedownPassword = $passwords->hash($plainPassword, ['cost' => 4]);
-        $this->connection->executeQuery(
-            'UPDATE users SET `password` = ? WHERE ID = ?',
-            [$facedownPassword, $facedownId]
-        );
-        Assert::contains(
-            '$2y$04$',
+        Assert::notSame(
+            'encrypted',
             $this->connection->fetchColumn(
                 'SELECT `password` FROM users WHERE ID = ?',
                 [$facedownId]
             )
         );
-        $identity = (new Access\Authenticator($this->entities, $passwords))
-            ->authenticate([0 => 'facedown', 1 => $plainPassword]);
-        Assert::contains(
-            '$2y$12$',
+        (new Access\Authenticator($this->entities, $cipher))
+            ->authenticate([0 => 'facedown', 1 => 'somePass']);
+        Assert::same(
+            'encrypted',
             $this->connection->fetchColumn(
                 'SELECT `password` FROM users WHERE ID = ?',
                 [$facedownId]
             )
         );
-        Assert::same($facedownId, $identity->getId());
-        Assert::same(['creator'], $identity->getRoles());
     }
 }
 

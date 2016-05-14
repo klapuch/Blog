@@ -37,6 +37,7 @@ common:
         router: Facedown\Router\RouterFactory(@Kdyby\Doctrine\EntityManager)::createRouter
         texy: Texy\Texy
         identity: @Facedown\Model\Access\IdentityFactory::create()
+        bcrypt: Facedown\Model\Security\Bcrypt
         authenticator: Facedown\Model\Access\Authenticator
         - Nette\Security\Passwords
         - Facedown\Model\Access\IdentityFactory

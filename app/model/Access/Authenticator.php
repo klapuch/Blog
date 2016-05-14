@@ -3,18 +3,20 @@ namespace Facedown\Model\Access;
 
 use Facedown\Model;
 use Kdyby\Doctrine;
-use Nette\Security;
+use Nette\Security\{
+    IAuthenticator, AuthenticationException, Identity
+};
 
-class Authenticator implements Security\IAuthenticator {
+final class Authenticator implements IAuthenticator {
     private $entities;
-    private $passwords;
+    private $cipher;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Security\Passwords $passwords
+        Model\Security\Cipher $cipher
     ) {
         $this->entities = $entities;
-        $this->passwords = $passwords;
+        $this->cipher = $cipher;
     }
 
     public function authenticate(array $credentials) {
@@ -23,19 +25,14 @@ class Authenticator implements Security\IAuthenticator {
         /** @var $user Model\User */
         $user = $users->findOneByUsername($username);
         if($user === null)
-            throw new Security\AuthenticationException('Uživatel neexistuje');
-        elseif(!$this->passwords->verify($plainPassword, $user->password()))
-            throw new Security\AuthenticationException('Nesprávné heslo');
-        if($this->passwords->needsRehash($user->password(), ['cost' => 12])) {
-            $user->changePassword(
-                $this->passwords->hash(
-                    $plainPassword,
-                    ['cost' => 12]
-                )
-            );
+            throw new AuthenticationException('Uživatel neexistuje');
+        elseif(!$this->cipher->decrypt($plainPassword, $user->password()))
+            throw new AuthenticationException('Nesprávné heslo');
+        if($this->cipher->deprecated($user->password())) {
+            $user->changePassword($this->cipher->encrypt($plainPassword));
             $this->entities->flush();
         }
-        return new Security\Identity($user->id(), [(string)$user->role()]);
+        return new Identity($user->id(), [(string)$user->role()]);
     }
 
 }

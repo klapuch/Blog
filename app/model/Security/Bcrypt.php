@@ -1,5 +1,5 @@
 <?php
-namespace Blog\Model\Security;
+namespace Facedown\Model\Security;
 
 use Nette\Security;
 
