@@ -34,14 +34,14 @@ final class ImportantInbox extends Nette\Object implements Inbox {
 
     public function iterate(): array {
         return $this->entities->createQueryBuilder()
-            ->addSelect('m')
+            ->select('m')
             ->addSelect("(CASE
                 WHEN m.state LIKE 'unread' THEN 1
                 WHEN m.state LIKE 'read' THEN 2
                 WHEN m.state LIKE 'spam' THEN 3
                 ELSE 4 END) AS HIDDEN ord")
-            ->from('Facedown\Model\Post\Message', 'm')
-            ->addOrderBy('ord', 'ASC')
+            ->from(Message::class, 'm')
+            ->orderBy('ord', 'ASC')
             ->addOrderBy('m.date', 'DESC')
             ->getQuery()
             ->getResult();
