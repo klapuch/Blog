@@ -88,7 +88,8 @@ final class ClanekPresenter extends BasePresenter {
             new Model\SelectedTags(
                 $this->entities,
                 $this->article()->tags()->toArray()
-            )
+            ),
+            $this->identity
         );
     }
 

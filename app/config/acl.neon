@@ -23,6 +23,7 @@ services:
             - addResource(addArticleForm)
             - addResource(editArticleForm)
             - addResource(Tag)
+            - addResource(tags-tags)
 
             - deny(guest, Clanek, editace)
             - allow(guest, Prihlasit)

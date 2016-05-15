@@ -9,14 +9,17 @@ use Nette\Application\UI,
 final class Tag extends BaseControl {
     private $entities;
     private $tag;
+    private $identity;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Tag $tag
+        Model\Tag $tag,
+        Security\IIdentity $identity
     ) {
         parent::__construct();
         $this->entities = $entities;
         $this->tag = $tag;
+        $this->identity = $identity;
     }
 
     protected function createTemplate() {

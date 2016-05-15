@@ -84,7 +84,8 @@ final class ClankyPresenter extends BasePresenter {
             new Model\PinnedArticleTags(
                 $this->entities,
                 new Model\ArticleTags($this->entities)
-            )
+            ),
+            $this->identity
         );
     }
 

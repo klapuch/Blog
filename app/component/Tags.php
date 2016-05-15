@@ -3,19 +3,23 @@ namespace Facedown\Component;
 
 use Kdyby\Doctrine;
 use Facedown\Model;
-use Nette\Application\UI;
+use Nette\Application\UI,
+    Nette\Security;
 
 final class Tags extends BaseControl {
     private $entities;
     private $tags;
+    private $identity;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Tags $tags
+        Model\Tags $tags,
+        Security\IIdentity $identity
     ) {
         parent::__construct();
         $this->entities = $entities;
         $this->tags = $tags;
+        $this->identity = $identity;
     }
 
     public function createTemplate() {
@@ -43,7 +47,11 @@ final class Tags extends BaseControl {
     protected function createComponentTags() {
         $components = [];
         foreach($this->tags->iterate() as $tag)
-            $components[$tag->id()] = new Tag($this->entities, $tag);
+            $components[$tag->id()] = new Tag(
+                $this->entities,
+                $tag,
+                $this->identity
+            );
         return new UI\Multiplier(
             function(int $id) use ($components) {
                 return $components[$id];
