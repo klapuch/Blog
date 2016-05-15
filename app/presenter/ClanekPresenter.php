@@ -21,6 +21,7 @@ final class ClanekPresenter extends BasePresenter {
             'content' => $article->content(),
         ];
         $this->template->article = $article;
+        $this->template->backlink = $this->storeRequest();
     }
 
     public function createComponentEditArticleForm() {

@@ -22,6 +22,7 @@ services:
             - addResource(Zprava)
             - addResource(addArticleForm)
             - addResource(editArticleForm)
+            - addResource(Tag)
 
             - deny(guest, Clanek, editace)
             - allow(guest, Prihlasit)
@@ -40,6 +41,7 @@ services:
             - deny(guest, Komentar, smazat)
             - deny(guest, addArticleForm)
             - deny(guest, editArticleForm)
+            - deny(guest, Tag)
 
             - allow(creator)
             - allow(administrator)
