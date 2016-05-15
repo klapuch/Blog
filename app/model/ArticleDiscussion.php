@@ -41,9 +41,9 @@ class ArticleDiscussion extends Nette\Object implements Discussion {
         $comment = $this->comments->findOneBy(
             ['id' => $id, 'article' => $this->article]
         );
-        if($comment === null)
-            throw new Exception\ExistenceException('Komentář neexistuje');
-        return $comment;
+        if($comment !== null)
+            return $comment;
+        throw new Exception\ExistenceException('Komentář neexistuje');
     }
 
     public function count(): int {

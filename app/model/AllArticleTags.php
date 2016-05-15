@@ -27,4 +27,11 @@ final class AllArticleTags implements Tags {
             'Všechny tagy nelze připnout za konkrétní cíl'
         );
     }
+
+    public function tag(int $id): Tag {
+        $tag = $this->entities->find(ArticleTag::class, $id);
+        if($tag !== null)
+            return $tag;
+        throw new Exception\ExistenceException('Tag neexistuje');
+    }
 }

@@ -46,9 +46,9 @@ final class NewestArticles extends Nette\Object implements Articles {
 
     public function article(int $id): Article {
         $article = $this->articles->find($id);
-        if($article === null)
-            throw new ExistenceException('Článek neexistuje');
-        return $article;
+        if($article !== null)
+            return $article;
+        throw new ExistenceException('Článek neexistuje');
     }
 
     public function iterate(): array {

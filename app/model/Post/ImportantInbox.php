@@ -27,9 +27,9 @@ final class ImportantInbox extends Nette\Object implements Inbox {
 
     public function message(int $id): Message {
         $message = $this->inbox->find($id);
-        if($message === null)
-            throw new Exception\ExistenceException('Zpráva neexistuje');
-        return $message;
+        if($message !== null)
+            return $message;
+        throw new Exception\ExistenceException('Zpráva neexistuje');
     }
 
     public function iterate(): array {

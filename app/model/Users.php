@@ -42,8 +42,8 @@ final class Users extends Nette\Object {
 
     public function user(int $id): User {
         $user = $this->users->find($id);
-        if($user === null)
-            throw new ExistenceException('Uživatel neexistuje');
-        return $user;
+        if($user !== null)
+            return $user;
+        throw new ExistenceException('Uživatel neexistuje');
     }
 }

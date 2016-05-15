@@ -24,15 +24,14 @@ final class ArticleSlugs implements Slugs {
             $slug = $this->slugs->findOneByName($identifier);
         else
             $slug = $this->slugs->findOneByOrigin($identifier);
-        if($slug === null) {
-            throw new ExistenceException(
-                sprintf(
-                    'Slug %s neexistuje',
-                    (string)$identifier
-                )
-            );
-        }
-        return $slug;
+        if($slug !== null)
+            return $slug;
+        throw new ExistenceException(
+            sprintf(
+                'Slug %s neexistuje',
+                (string)$identifier
+            )
+        );
     }
 
     public function add(int $origin, string $name): Slug {
