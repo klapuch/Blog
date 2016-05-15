@@ -1,0 +1,4 @@
+{foreach $tags as $tag}
+    {control tags-{$tag->id()}:editable $articleId}
+    <br>
+{/foreach}

@@ -1,12 +1,6 @@
 {block content}
 {define description}Úprava komentáře ke konkrétní diskuzi{/define}
-<div class="row">
-    <div class="col-sm-4">
-        {foreach $tags->iterate() as $tag}
-            <span class="label label-default"><a class="no-link" n:href="Clanky:default tag => (string)$tag">{$tag}</a></span>
-        {/foreach}
-    </div>
-</div>
+{control tags}
 <h1>{block title}Články {ifset $selectedTag} pro tag <strong>{$selectedTag}</strong>{/ifset}{/block}</h1>
 {if $user->isAllowed('Clanky', 'pridani')}
     <a n:href="Clanky:pridani">

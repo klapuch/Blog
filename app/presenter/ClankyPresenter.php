@@ -21,7 +21,6 @@ final class ClankyPresenter extends BasePresenter {
                     $this->template->articles
                 );
             }
-            $this->template->tags = new Model\AllArticleTags($this->entities);
         } catch(Exception\ExistenceException $ex) {
             $this->error($ex->getMessage());
         }
@@ -77,6 +76,16 @@ final class ClankyPresenter extends BasePresenter {
         } catch(Exception\ExistenceException $ex) {
             $this->flashMessage($ex->getMessage(), 'danger');
         }
+    }
+    
+    public function createComponentTags() {
+        return new Component\Tags(
+            $this->entities,
+            new Model\PinnedArticleTags(
+                $this->entities,
+                new Model\ArticleTags($this->entities)
+            )
+        );
     }
 
     private function articles() {

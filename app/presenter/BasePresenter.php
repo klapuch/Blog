@@ -1,11 +1,14 @@
 <?php
 namespace Facedown\Presenter;
 
+use Nextras;
 use Nette,
     Nette\Http\IResponse;
 use Kdyby;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter {
+    use Nextras\Application\UI\SecuredLinksPresenterTrait;
+
     /** @var Kdyby\Doctrine\EntityManager @inject */
     public $entities;
 

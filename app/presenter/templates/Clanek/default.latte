@@ -6,10 +6,7 @@
             <h1>{$article->title()}
                 <small title="Datum zveřejnění">{$article->date()->format('j.n.Y H:i')}</small>
             </h1>
-            {foreach $article->tags() as $tag}
-                {continueIf !$tag->pinned()}
-                <span class="label label-default"><a class="no-link" n:href="Clanky:default tag => (string)$tag">{$tag}</a></span>
-            {/foreach}
+            {control tags:pinned}
         </div>
         <p>{$article->content()|noescape|texy}</p>
         {if $user->isAllowed('Clanek', 'editace')}

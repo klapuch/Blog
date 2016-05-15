@@ -4,11 +4,16 @@ namespace Facedown\Model;
 use Facedown\Exception;
 use Kdyby\Doctrine;
 
-final class AllArticleTags implements Tags {
+final class PinnedArticleTags implements Tags {
     private $entities;
+    private $origin;
 
-    public function __construct(Doctrine\EntityManager $entities) {
+    public function __construct(
+        Doctrine\EntityManager $entities,
+        Tags $origin
+    ) {
         $this->entities = $entities;
+        $this->origin = $origin;
     }
 
     public function iterate(): array {
@@ -23,20 +28,14 @@ final class AllArticleTags implements Tags {
     }
 
     public function pin($target) {
-        throw new \LogicException(
-            'Všechny tagy nelze připnout za konkrétní cíl'
-        );
+        $this->origin->pin($target);
     }
 
     public function tag(int $id): Tag {
-        $tag = $this->entities->find(ArticleTag::class, $id);
-        if($tag !== null)
-            return $tag;
-        throw new Exception\ExistenceException('Tag neexistuje');
+        return $this->origin->tag($id);
     }
 
     public function remove(Tag $tag) {
-        $this->entities->remove($tag);
-        $this->entities->flush();
+        $this->origin->remove($tag);
     }
 }

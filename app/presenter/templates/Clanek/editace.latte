@@ -11,27 +11,7 @@
 	<div class="form-group">
 		<label>Tagy</label>
 		<br>
-		{foreach $article->tags() as $tag}
-			{if $tag->pinned()}
-			<span class="label label-default">
-				{$tag}
-				<a class="no-link" n:href="Tag:unpin id => $tag->id(), backlink => $backlink">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-				</a>
-			</span>
-			{else}
-				<span class="label label-danger">
-				{$tag}
-					<a class="no-link" n:href="Tag:pin id => $tag->id(), articleId => $article->id(), backlink => $backlink">
-						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-					</a>
-					<a class="no-link" n:href="Tag:remove id => $tag->id(), backlink => $backlink">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</a>
-			</span>
-			{/if}
-			<br>
-		{/foreach}
+		{control tags:editable $article->id()}
 	</div>
 	<div class="form-group">
 		{label tags}{/label}
