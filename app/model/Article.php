@@ -1,6 +1,7 @@
 <?php
 namespace Facedown\Model;
 
+use Doctrine\Common\Collections;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,11 +42,18 @@ class Article {
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ArticleTag", mappedBy="article")
+     * @ORM\JoinColumn(referencedColumnName="article")
+     */
+    private $tags;
+
     public function __construct(string $title, string $content, User $author) {
         $this->title = $title;
         $this->content = $content;
         $this->author = $author;
         $this->date = new \DateTimeImmutable;
+        $this->tags = new Collections\ArrayCollection;
     }
 
     public function edit(string $title, string $content): self {
@@ -72,5 +80,9 @@ class Article {
 
     public function author(): User {
         return $this->author;
+    }
+
+    public function tags(): Collections\Collection {
+        return $this->tags;
     }
 }

@@ -5,12 +5,26 @@ use Facedown\{
     Exception, Model, Component
 };
 use Nette\Security,
+    Nette\Application,
     Nette\Application\UI,
     Nette\Utils\Strings;
 
 final class ClankyPresenter extends BasePresenter {
-    public function renderDefault() {
-        $this->template->articles = $this->articles();
+    public function renderDefault(string $tag = null) {
+        try {
+            $this->template->selectedTag = $tag;
+            $this->template->articles = $this->articles();
+            if($tag !== null) {
+                $this->template->articles = new Model\TaggedArticles(
+                    $tag,
+                    $this->entities,
+                    $this->template->articles
+                );
+            }
+            $this->template->tags = new Model\AllArticleTags($this->entities);
+        } catch(Exception\ExistenceException $ex) {
+            $this->error($ex->getMessage());
+        }
     }
 
     public function createComponentAddArticleForm() {
@@ -18,6 +32,8 @@ final class ClankyPresenter extends BasePresenter {
         $form->addText('title', 'Titulek')
             ->addRule(UI\Form::FILLED, '%label musí být vyplněn')
             ->addRule(UI\Form::MAX_LENGTH, '%label smí mít maximálně %d znaků', 50);
+        $form->addText('tags', 'Tagy')
+            ->addRule(UI\Form::FILLED, '%label musí být vyplněny');
         $form->addTextArea('content', 'Obsah')
             ->addRule(UI\Form::FILLED, '%label musí být vyplněn');
         $form->addSubmit('act', 'Přidat');
@@ -43,6 +59,16 @@ final class ClankyPresenter extends BasePresenter {
                         $publishedArticle->id(),
                         Strings::webalize($publishedArticle->title())
                     );
+                    (new Model\SelectedTags(
+                        $this->entities,
+                        array_reduce(
+                            array_map('trim', explode(',', $article->tags)),
+                            function($previous, string $tag) {
+                                $previous[] = new Model\ArticleTag($tag);
+                                return $previous;
+                            }
+                        )
+                    ))->pin($publishedArticle);
                     return $publishedArticle;
                 }
             );

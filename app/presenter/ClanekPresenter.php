@@ -18,7 +18,7 @@ final class ClanekPresenter extends BasePresenter {
         $article = $this->article();
         $this['editArticleForm']->defaults = [
             'title' => $article->title(),
-            'content' => $article->content()
+            'content' => $article->content(),
         ];
         $this->template->article = $article;
     }
@@ -28,6 +28,7 @@ final class ClanekPresenter extends BasePresenter {
         $form->addText('title', 'Titulek')
             ->addRule(UI\Form::FILLED, '%label musí být vyplněn')
             ->addRule(UI\Form::MAX_LENGTH, '%label smí mít maximálně %d znaků', 50);
+        $form->addText('tags', 'Tagy');
         $form->addTextArea('content', 'Obsah')
             ->addRule(UI\Form::FILLED, '%label musí být vyplněn');
         $form->addSubmit('act', 'Upravit');
@@ -39,9 +40,22 @@ final class ClanekPresenter extends BasePresenter {
 
     public function editArticleFormSucceeded(UI\Form $form) {
         $article = $form->values;
-        $this->article()->edit($article->title, $article->content);
+        $this->entities->transactional(function () use ($article) {
+            if(trim($article->tags)) {
+                (new Model\SelectedTags(
+                    $this->entities,
+                    array_reduce(
+                        array_map('trim', explode(',', $article->tags)),
+                        function($previous, string $tag) {
+                            $previous[] = new Model\ArticleTag($tag);
+                            return $previous;
+                        }
+                    )
+                ))->pin($this->article());
+            }
+            $this->article()->edit($article->title, $article->content);
+        });
         $this->flashMessage('Článek byl upraven', 'success');
-        $this->entities->flush();
         $this->redirect('Clanek:default', ['id' => $this->getParameter('id')]);
     }
 

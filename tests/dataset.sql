@@ -27,3 +27,11 @@ INSERT INTO inbox (sender, subject, content, `date`, state) VALUES
 INSERT INTO article_slugs (origin, name) VALUES
 (1, "footitle"),
 (2, "bartitle");
+
+INSERT INTO article_tags (article, name, pinned) VALUES
+(1, "security", 1),
+(1, "clean code", 1),
+(1, "OOP", 0),
+(2, "OOP", 1),
+(2, "security", 1),
+(2, "fooTag", 0);
