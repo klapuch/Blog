@@ -31,6 +31,7 @@ final class PrihlasitPresenter extends BasePresenter {
         try {
             $user = $form->values;
             $this->user->login($user->username, $user->password);
+            $this->flashMessage('Jsi přihlášen', 'success');
             $this->session->regenerateId();
             $this->redirect('Default:');
         } catch(Security\AuthenticationException $ex) {
