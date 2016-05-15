@@ -34,4 +34,8 @@ final class AllArticleTags implements Tags {
             return $tag;
         throw new Exception\ExistenceException('Tag neexistuje');
     }
+
+    public function remove(int $id) {
+        $this->entities->remove();
+    }
 }

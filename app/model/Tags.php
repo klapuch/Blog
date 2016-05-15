@@ -23,4 +23,10 @@ interface Tags {
      * @return Tag
      */
     public function tag(int $id): Tag;
+
+    /**
+     * Remove from the current tags
+     * @param int $id
+     */
+    public function remove(Tag $tag);
 }

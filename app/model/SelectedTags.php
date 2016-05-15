@@ -46,4 +46,10 @@ final class SelectedTags implements Tags {
             return current($tag);
         throw new Exception\ExistenceException('Tag neexistuje');
     }
+
+    public function remove(Tag $tag) {
+        $key = array_search($tag, $this->tags, $strict = false);
+        if($key !== false)
+            unset($this->tags[$key]);
+    }
 }

@@ -76,6 +76,22 @@ final class SelectedTags extends TestCase\Database {
             [new Fake\Tag('foo', 1), new Fake\Tag('bar', 2)]
         ))->tag(3);
     }
+
+    public function testRemoving() {
+        $tags = new Model\SelectedTags(
+            $this->entities,
+            [
+                new Fake\Tag('foo', 1),
+                new Fake\Tag('bar', 2),
+                new Fake\Tag('fooBar', 3)
+            ]
+        );
+        Assert::same(3, count($tags->iterate()));
+        $tags->remove(new Fake\Tag('bar', 2));
+        Assert::same(2, count($tags->iterate()));
+        $tags->remove(new Fake\Tag('xxxxxxxxxxxxx', 666));
+        Assert::same(2, count($tags->iterate()));
+    }
 }
 
 (new SelectedTags())->run();

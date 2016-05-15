@@ -17,4 +17,7 @@ final class Tags implements Model\Tags {
 
     }
 
+    public function remove(Model\Tag $tag) {
+
+    }
 }
