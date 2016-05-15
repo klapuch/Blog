@@ -16,7 +16,7 @@ use Nette\Security;
 require __DIR__ . '/../../bootstrap.php';
 
 final class NewestArticles extends TestCase\Database {
-    /** @var $articles Model\Articles */
+    /** @var $articles Model\NewestArticles */
     private $articles;
 
     public function setUp() {
