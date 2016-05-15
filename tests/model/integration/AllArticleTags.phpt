@@ -29,6 +29,18 @@ final class AllArticleTags extends TestCase\Database {
     public function testPinning() {
         (new Model\AllArticleTags($this->entities))->pin(new Fake\Article(1));
     }
+
+    public function testTag() {
+        $tag = (new Model\AllArticleTags($this->entities))->tag(1);
+        Assert::same('security', (string)$tag);
+    }
+
+    /**
+     * @throws \Facedown\Exception\ExistenceException Tag neexistuje
+     */
+    public function testUnknownTag() {
+        (new Model\AllArticleTags($this->entities))->tag(666);
+    }
 }
 
 (new AllArticleTags())->run();

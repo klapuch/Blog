@@ -58,6 +58,24 @@ final class SelectedTags extends TestCase\Database {
         Assert::same('foo', (string)$tags[0]);
         Assert::same('bar', (string)$tags[1]);
     }
+
+    public function testTag() {
+        $tag = (new Model\SelectedTags(
+            $this->entities,
+            [new Fake\Tag('foo', 1), new Fake\Tag('bar', 2)]
+        ))->tag(2);
+        Assert::same('bar', (string)$tag);
+    }
+
+    /**
+     * @throws \Facedown\Exception\ExistenceException Tag neexistuje
+     */
+    public function testUnknownTag() {
+        (new Model\SelectedTags(
+            $this->entities,
+            [new Fake\Tag('foo', 1), new Fake\Tag('bar', 2)]
+        ))->tag(3);
+    }
 }
 
 (new SelectedTags())->run();

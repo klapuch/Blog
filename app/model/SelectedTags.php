@@ -37,4 +37,13 @@ final class SelectedTags implements Tags {
             throw new Exception\ExistenceException('Tag již existuje');
         }
     }
+
+    public function tag(int $id): Tag {
+        $tag = array_filter($this->tags, function(Tag $tag) use($id) {
+            return $tag->id() === $id;
+        });
+        if(count($tag) === 1)
+            return current($tag);
+        throw new Exception\ExistenceException('Tag neexistuje');
+    }
 }
