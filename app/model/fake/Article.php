@@ -13,4 +13,8 @@ final class Article extends Model\Article {
     public function id(): int {
         return $this->id;
     }
+
+    public function __toString() {
+        return (string)$this->id;
+    }
 }
