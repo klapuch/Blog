@@ -34,4 +34,10 @@ final class TagPresenter extends BasePresenter {
         $this->entities->flush();
         $this->restoreRequest($this->backlink);
     }
+
+    public function actionRemove(int $id) {
+        $tags = new Model\AllArticleTags($this->entities);
+        $tags->remove($tags->tag($id));
+        $this->restoreRequest($this->backlink);
+    }
 }

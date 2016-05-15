@@ -23,8 +23,11 @@
 				<span class="label label-danger">
 				{$tag}
 					<a class="no-link" n:href="Tag:pin id => $tag->id(), articleId => $article->id(), backlink => $backlink">
-					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-				</a>
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					</a>
+					<a class="no-link" n:href="Tag:remove id => $tag->id(), backlink => $backlink">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</a>
 			</span>
 			{/if}
 			<br>
