@@ -33,7 +33,7 @@ final class TaggedArticles extends Nette\Object implements Articles {
         if($this->count() === 0) {
             throw new Exception\ExistenceException(
                 sprintf(
-                    'Pro tag %s nebyly nalezený žádné články',
+                    'Pro tag %s nebyly nalezeny žádné články',
                     $this->tag
                 )
             );

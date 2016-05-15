@@ -39,7 +39,7 @@ final class TaggedArticles extends TestCase\Database {
     }
 
     /**
-     * @throws \Facedown\Exception\ExistenceException Pro tag fooBar???? nebyly nalezený žádné články
+     * @throws \Facedown\Exception\ExistenceException Pro tag fooBar???? nebyly nalezeny žádné články
      */
     public function testIteratingOnUnknownTag() {
         (new Model\TaggedArticles(
