@@ -41,6 +41,13 @@ final class AllArticleTags extends TestCase\Database {
     public function testUnknownTag() {
         (new Model\AllArticleTags($this->entities))->tag(666);
     }
+
+    public function testRemoving() {
+        $tags = new Model\AllArticleTags($this->entities);
+        Assert::same(3, count($tags->iterate()));
+        $tags->remove($tags->iterate()[0]);
+        Assert::same(2, count($tags->iterate()));
+    }
 }
 
 (new AllArticleTags())->run();
