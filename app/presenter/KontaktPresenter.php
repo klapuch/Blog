@@ -17,7 +17,8 @@ final class KontaktPresenter extends BasePresenter {
             ->addRule(UI\Form::FILLED, '%label musí být vyplněn')
             ->addRule(UI\Form::MAX_LENGTH, '%label smí mít maximálně %d znaků', 100);
         $form->addTextArea('content', 'Obsah')
-            ->addRule(UI\Form::FILLED, '%label musí být vyplněn');
+            ->addRule(UI\Form::FILLED, '%label musí být vyplněn')
+            ->setAttribute('rows', 15);
         $form->addSubmit('act', 'Poslat');
         $form->onSuccess[] = function(UI\Form $form) {
             $this->contactFormSucceeded($form);

@@ -1,22 +1,14 @@
 <?php
 namespace Facedown\Presenter;
 
-use Facedown\Model;
+use Facedown\Component;
+use Facedown\Model\Post;
 
 final class PostaPresenter extends BasePresenter {
-    public function renderDefault() {
-        $this->template->czechStates = [
-            'unread' => 'Nepřečteno',
-            'read' => 'Přečteno',
-            'spam' => 'Spam'
-        ];
-        $this->template->colors = [
-            'unread' => 'success',
-            'read' => 'muted',
-            'spam' => 'danger'
-        ];
-        $this->template->inbox = new Model\Post\ImportantInbox(
-            $this->entities
+    public function createComponentInbox() {
+        return new Component\Inbox(
+            $this->entities,
+            new Post\ImportantInbox($this->entities)
         );
     }
 }

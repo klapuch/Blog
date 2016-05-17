@@ -1,0 +1,31 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Předmět</th>
+        <th>Odesilatel</th>
+        <th>Datum přijetí</th>
+        <th>Stav</th>
+        <th>Detail</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $inbox->iterate() as $message}
+        <tr class="text-{$colors[$message->state()]}">
+            <td><p>{$message->subject()}</p></td>
+            <td><p>{$message->sender()}</p></td>
+            <td><p>{$message->date()->format('j.n.Y H:i')}</p></td>
+            <td><p>{$czechStates[$message->state()]}</p></td>
+            <td>
+                <p>
+                    <a href="{plink Zprava:precist id => $message->id()}">
+                        <span class="glyphicon glyphicon-eye-open"
+                              aria-hidden="true">
+
+                        </span>
+                    </a>
+                </p>
+            </td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
