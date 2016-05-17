@@ -82,13 +82,10 @@ final class ClanekPresenter extends BasePresenter {
         $this->redirect('this');
     }
 
-    public function createComponentTags() {
-        return new Component\Tags(
+    public function createComponentArticle() {
+        return new Component\Article(
             $this->entities,
-            new Model\SelectedTags(
-                $this->entities,
-                $this->article()->tags()->toArray()
-            ),
+            $this->article(),
             $this->identity
         );
     }

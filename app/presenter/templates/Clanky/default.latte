@@ -1,6 +1,6 @@
 {block content}
 {define description}Úprava komentáře ke konkrétní diskuzi{/define}
-{control tags}
+{control allTags}
 <h1>{block title}Články {ifset $selectedTag} pro tag <strong>{$selectedTag}</strong>{/ifset}{/block}</h1>
 {if $user->isAllowed('Clanky', 'pridani')}
     <a n:href="Clanky:pridani">

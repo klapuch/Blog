@@ -79,7 +79,7 @@ final class ClankyPresenter extends BasePresenter {
         }
     }
     
-    public function createComponentTags() {
+    public function createComponentAllTags() {
         return new Component\Tags(
             $this->entities,
             new Model\CachedTags(

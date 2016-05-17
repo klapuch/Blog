@@ -1,23 +1,6 @@
 {block content}
 {define title}{$article->title()}{/define}
-<div class="row">
-    <div class="well">
-        <div class="page-header">
-            <h1>{$article->title()}
-                <small title="Datum zveřejnění">{$article->date()->format('j.n.Y H:i')}</small>
-            </h1>
-            {control tags:pinned}
-        </div>
-        <p>{$article->content()|noescape|texy}</p>
-        {if $user->isAllowed('Clanek', 'editace')}
-            <a n:href="Clanek:editace id => $article->id()">
-                <button type="button" class="btn btn-primary">Upravit</button>
-            </a>
-        {/if}
-        <p id="article-author">Autor:
-            <strong>{$article->author()->username()}</strong></p>
-    </div>
-</div>
+{control article}
 <div class="row">
     <h2>Diskuze
         <small>{$discussion->count()} komentářů</small>
