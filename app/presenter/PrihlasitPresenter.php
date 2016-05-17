@@ -8,6 +8,9 @@ use Nette\Security,
     Nette\Application\UI;
 
 final class PrihlasitPresenter extends BasePresenter {
+    /** @persistent */
+    public $backlink;
+
     public function startup() {
         parent::startup();
         if($this->user->loggedIn)
@@ -33,6 +36,7 @@ final class PrihlasitPresenter extends BasePresenter {
             $this->user->login($user->username, $user->password);
             $this->flashMessage('Jsi přihlášen', 'success');
             $this->session->regenerateId();
+            $this->restoreRequest($this->backlink);
             $this->redirect('Default:');
         } catch(Security\AuthenticationException $ex) {
             $form->addError($ex->getMessage());
