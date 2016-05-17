@@ -7,7 +7,7 @@
     </h2>
 </div>
 {foreach $discussion->iterate() as $comment}
-    <div class="well well-sm row {$comment->visible() ? '' : 'text-muted'}">
+    <div n:class="well, well-sm, row, !$comment->visible() ? text-muted">
         <p><strong>Přezdívka:</strong> {$comment->author()}</p>
         <p><strong>Datum
                 zveřejnění:</strong> {$comment->date()->format('j.n.Y H:i')}</p>
