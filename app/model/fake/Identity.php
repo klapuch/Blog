@@ -7,7 +7,7 @@ final class Identity implements Security\IIdentity {
     private $id;
     private $roles;
 
-    public function __construct(int $id = 0, array $roles = []) {
+    public function __construct(int $id = -1, array $roles = []) {
         $this->id = $id;
         $this->roles = $roles;
     }

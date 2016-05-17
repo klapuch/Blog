@@ -4,11 +4,12 @@ namespace Facedown\Presenter;
 use Facedown\{
     Exception, Model, Component
 };
+use Facedown\Model\Fake;
 use Nette\Security,
     Nette\Application,
     Nette\Application\UI,
-    Nette\Utils\Strings,
-    Nette\Caching\Storages;
+    Nette\Caching\Storages,
+    Nette\Utils\Strings;
 
 final class ClankyPresenter extends BasePresenter {
     public function renderDefault(string $tag = null) {
@@ -27,23 +28,19 @@ final class ClankyPresenter extends BasePresenter {
         }
     }
 
-    public function createComponentAddArticleForm() {
-        $form = new Component\BaseForm;
-        $form->addText('title', 'Titulek')
-            ->addRule(UI\Form::FILLED, '%label musí být vyplněn')
-            ->addRule(UI\Form::MAX_LENGTH, '%label smí mít maximálně %d znaků', 50);
-        $form->addText('tags', 'Tagy')
-            ->addRule(UI\Form::FILLED, '%label musí být vyplněny');
-        $form->addTextArea('content', 'Obsah')
-            ->addRule(UI\Form::FILLED, '%label musí být vyplněn');
-        $form->addSubmit('act', 'Přidat');
+    public function createComponentArticleForm() {
+        $form = new Component\ArticleForm(
+            $this->entities,
+            new Fake\Tags,
+            new Fake\Identity
+        );
         $form->onSuccess[] = function(UI\Form $form) {
-            $this->addArticleFormSucceeded($form);
+            $this->articleFormSucceeded($form);
         };
         return $form;
     }
 
-    public function addArticleFormSucceeded(UI\Form $form) {
+    public function articleFormSucceeded(UI\Form $form) {
         try {
             $article = $form->values;
             $publishedArticle = $this->entities->transactional(
@@ -72,13 +69,13 @@ final class ClankyPresenter extends BasePresenter {
                     return $publishedArticle;
                 }
             );
-            $this->flashMessage('Článek byl přidán', 'success');
+            $this->flashMessage('Článek byl publikován', 'success');
             $this->redirect('Clanek:default', ['id' => $publishedArticle->id()]);
         } catch(Exception\ExistenceException $ex) {
-            $this->flashMessage($ex->getMessage(), 'danger');
+            $form->addError($ex->getMessage());
         }
     }
-    
+
     public function createComponentAllTags() {
         return new Component\Tags(
             $this->entities,

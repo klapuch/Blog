@@ -27,6 +27,8 @@ services:
             - addResource(discussion-discussion)
             - addResource(message)
             - addResource(discussionForm-form)
+            - addResource(articleForm-form)
+            - addResource(articleForm-tags-tags)
 
             - deny(guest, Clanek, editace)
             - allow(guest, Prihlasit)
@@ -48,6 +50,8 @@ services:
             - deny(guest, Tag)
             - deny(guest, discussion-discussion)
             - deny(guest, message)
+            - deny(guest, articleForm-form)
+            - deny(guest, articleForm-tags-tags)
 
             - allow(creator)
             - allow(administrator)

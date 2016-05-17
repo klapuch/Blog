@@ -1,0 +1,29 @@
+<form n:name="form" class="form-horizontal" role="form">
+    <div class="form-group">
+        {label title}{/label}
+        <input n:name="title" class="form-control" placeholder="Titulek">
+    </div>
+    {ifset $article}
+        <div class="form-group">
+            {control tags:editable $article->id()}
+        </div>
+    {/ifset}
+    <div class="form-group">
+        {label tags}{/label}
+        <input n:name="tags" class="form-control" placeholder="Tagy">
+    </div>
+    <div class="form-group">
+        {label content}{/label}
+        <textarea n:name="content" class="form-control"
+                                   placeholder="Obsah"></textarea>
+    </div>
+    <div class="form-group">
+        <button n:name="act" class="btn btn-success">
+            {ifset $article}
+                Upravit
+            {else}
+                Publikovat
+            {/ifset}
+        </button>
+    </div>
+</form>

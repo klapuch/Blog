@@ -17,7 +17,7 @@ final class ClanekPresenter extends BasePresenter {
 
     public function actionEditace(int $id) {
         $article = $this->article();
-        $this['editArticleForm']->defaults = [
+        $this['articleForm']['form']->defaults = [
             'title' => $article->title(),
             'content' => $article->content(),
         ];
@@ -25,22 +25,25 @@ final class ClanekPresenter extends BasePresenter {
         $this->template->backlink = $this->storeRequest();
     }
 
-    public function createComponentEditArticleForm() {
-        $form = new Component\BaseForm;
-        $form->addText('title', 'Titulek')
-            ->addRule(UI\Form::FILLED, '%label musí být vyplněn')
-            ->addRule(UI\Form::MAX_LENGTH, '%label smí mít maximálně %d znaků', 50);
-        $form->addText('tags', 'Tagy');
-        $form->addTextArea('content', 'Obsah')
-            ->addRule(UI\Form::FILLED, '%label musí být vyplněn');
-        $form->addSubmit('act', 'Upravit');
+    public function createComponentArticleForm() {
+        $form = new Component\ArticleForm(
+            $this->entities,
+            new Model\CachedTags(
+                new Storages\MemoryStorage,
+                new Model\SelectedTags(
+                    $this->entities,
+                    $this->article()->tags()->toArray()
+                )
+            ),
+            $this->identity
+        );
         $form->onSuccess[] = function(UI\Form $form) {
-            $this->editArticleFormSucceeded($form);
+            $this->articleFormSucceeded($form);
         };
         return $form;
     }
 
-    public function editArticleFormSucceeded(UI\Form $form) {
+    public function articleFormSucceeded(UI\Form $form) {
         $article = $form->values;
         $this->entities->transactional(function () use ($article) {
             if(trim($article->tags)) {
