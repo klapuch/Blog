@@ -93,6 +93,17 @@ final class ClankyPresenter extends BasePresenter {
         );
     }
 
+    public function createComponentArticles() {
+        return new Component\Articles(
+            $this->entities,
+            new Model\CachedArticles(
+                new Storages\MemoryStorage,
+                $this->articles()
+            ),
+            $this->identity
+        );
+    }
+
     private function articles() {
         return new Model\NewestArticles(
             $this->entities,

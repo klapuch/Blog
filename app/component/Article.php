@@ -32,6 +32,11 @@ final class Article extends BaseControl {
         $this->template->render();
     }
 
+    public function renderPreview() {
+        $this->template->setFile(__DIR__ . '/ArticlePreview.latte');
+        $this->template->render();
+    }
+
     protected function createComponentTags() {
         return new Tags(
             $this->entities,

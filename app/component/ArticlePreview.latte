@@ -1,0 +1,8 @@
+<a href="{plink Clanek:default id => $article->id()}">
+    <h2>
+        {$article->title()}
+    </h2>
+</a>
+{control tags:pinned}
+<h3 title="Datum zveřejnění">{$article->date()->format('j.n.Y H:i')}</h3>
+

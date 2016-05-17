@@ -8,13 +8,4 @@
     </a>
 {/if}
 <p>Počet článků: {$articles->count()}</p>
-{foreach $articles->iterate() as $article}
-    <a n:href="Clanek:default id => $article->id()"><h2>{$article->title()}</h2>
-    </a>
-    {foreach $article->tags() as $tag}
-        {continueIf !$tag->pinned()}
-        <span class="label label-default"><a class="no-link" n:href="Clanky:default tag => (string)$tag">{$tag}</a></span>
-    {/foreach}
-    <h3 title="Datum zveřejnění">{$article->date()->format('j.n.Y H:i')}</h3>
-    {sep}<hr>{/sep}
-{/foreach}
+{control articles}

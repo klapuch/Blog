@@ -1,0 +1,4 @@
+{foreach $articles as $article}
+    {control articles-{$article->id()}:preview}
+    {sep}<hr>{/sep}
+{/foreach}
