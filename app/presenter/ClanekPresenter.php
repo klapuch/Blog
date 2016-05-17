@@ -64,8 +64,8 @@ final class ClanekPresenter extends BasePresenter {
         $this->redirect('Clanek:default', ['id' => $this->getParameter('id')]);
     }
 
-    public function createComponentDiscussionForm() {
-        $form = new Component\DiscussionForm($this->discussion($this->article()));
+    public function createComponentCommentForm() {
+        $form = new Component\CommentForm($this->discussion($this->article()));
         $form->onSuccess[] = function() {
             $this->flashMessage('Komentář byl zveřejněn', 'success');
             $this->redirect('this');

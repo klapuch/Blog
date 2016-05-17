@@ -5,7 +5,7 @@ use Facedown\Model;
 use Facedown\Exception;
 use Nette\Application\UI;
 
-final class DiscussionForm extends BaseControl {
+final class CommentForm extends BaseControl {
     private $discussion;
     public $onSuccess = [];
 
@@ -15,7 +15,7 @@ final class DiscussionForm extends BaseControl {
     }
 
     public function render() {
-        $this->template->setFile(__DIR__ . '/DiscussionForm.latte');
+        $this->template->setFile(__DIR__ . '/CommentForm.latte');
         $this->template->render();
     }
 
