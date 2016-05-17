@@ -62,25 +62,12 @@ final class ClanekPresenter extends BasePresenter {
     }
 
     public function createComponentDiscussionForm() {
-        $form = new Component\BaseForm;
-        $form->addText('author', 'Autor')
-            ->addRule(UI\Form::FILLED, '%label musí být vyplněn')
-            ->addRule(UI\Form::MAX_LENGTH, '%label smí mít maximálně %d znaků', 50);
-        $form->addTextArea('content', 'Obsah')
-            ->addRule(UI\Form::FILLED, '%label musí být vyplněn');
-        $form->addSubmit('act', 'Přidat');
-        $form->onSuccess[] = function(UI\Form $form) {
-            $this->discussionFormSucceeded($form);
+        $form = new Component\DiscussionForm($this->discussion($this->article()));
+        $form->onSuccess[] = function() {
+            $this->flashMessage('Komentář byl zveřejněn', 'success');
+            $this->redirect('this');
         };
         return $form;
-    }
-
-    public function discussionFormSucceeded(UI\Form $form) {
-        $discussion = $this->discussion($this->article());
-        $comment = $form->values;
-        $discussion->post($comment->content, $comment->author);
-        $this->flashMessage('Komentář byl zveřejněn', 'success');
-        $this->redirect('this');
     }
 
     public function createComponentArticle() {

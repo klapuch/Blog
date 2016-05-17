@@ -26,6 +26,7 @@ services:
             - addResource(tags-tags)
             - addResource(discussion-discussion)
             - addResource(message)
+            - addResource(discussionForm-form)
 
             - deny(guest, Clanek, editace)
             - allow(guest, Prihlasit)
