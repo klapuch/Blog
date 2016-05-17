@@ -24,6 +24,7 @@ services:
             - addResource(editArticleForm)
             - addResource(Tag)
             - addResource(tags-tags)
+            - addResource(discussion-discussion)
 
             - deny(guest, Clanek, editace)
             - allow(guest, Prihlasit)
@@ -43,6 +44,7 @@ services:
             - deny(guest, addArticleForm)
             - deny(guest, editArticleForm)
             - deny(guest, Tag)
+            - deny(guest, discussion-discussion)
 
             - allow(creator)
             - allow(administrator)

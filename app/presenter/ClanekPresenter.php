@@ -5,7 +5,8 @@ use Facedown\{
     Model, Exception, Component
 };
 use Nette\Security,
-    Nette\Application\UI;
+    Nette\Application\UI,
+    Nette\Caching\Storages;
 
 final class ClanekPresenter extends BasePresenter {
     public function renderDefault(int $id) {
@@ -90,6 +91,13 @@ final class ClanekPresenter extends BasePresenter {
         );
     }
 
+    public function createComponentDiscussion() {
+        return new Component\Discussion(
+            $this->entities,
+            $this->discussion($this->article())
+        );
+    }
+
     private function article(): Model\Article {
         try {
             return (new Model\NewestArticles(
@@ -106,9 +114,12 @@ final class ClanekPresenter extends BasePresenter {
     }
 
     private function discussion(Model\Article $article): Model\Discussion {
-        return new Model\ArticleDiscussion(
-            $this->entities,
-            $article
+        return new Model\CachedDiscussion(
+            new Storages\MemoryStorage,
+            new Model\ArticleDiscussion(
+                $this->entities,
+                $article
+            )
         );
     }
 }

@@ -1,0 +1,14 @@
+<div n:class="well, well-sm, row, !$comment->visible() ? text-muted">
+    <p><strong>Přezdívka nebo email:</strong> {$comment->author()}</p>
+    <p><strong>Datum zveřejnění:</strong> {$comment->date()->format('j.n.Y H:i')}</p>
+    {if $comment->visible()}
+        <p>{$comment->content()}</p>
+    {else}
+        <p><em>Komentář byl smazán správcem webu</em></p>
+    {/if}
+    {if $user->isAllowed('Komentar', 'smazat') && $comment->visible()}
+        <a n:href="smazat!">
+            <button type="button" class="btn btn-danger">Smazat</button>
+        </a>
+    {/if}
+</div>
