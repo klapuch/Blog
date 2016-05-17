@@ -7,7 +7,8 @@ use Facedown\{
 use Nette\Security,
     Nette\Application,
     Nette\Application\UI,
-    Nette\Utils\Strings;
+    Nette\Utils\Strings,
+    Nette\Caching\Storages;
 
 final class ClankyPresenter extends BasePresenter {
     public function renderDefault(string $tag = null) {
@@ -81,9 +82,12 @@ final class ClankyPresenter extends BasePresenter {
     public function createComponentTags() {
         return new Component\Tags(
             $this->entities,
-            new Model\PinnedArticleTags(
-                $this->entities,
-                new Model\ArticleTags($this->entities)
+            new Model\CachedTags(
+                new Storages\MemoryStorage,
+                new Model\PinnedArticleTags(
+                    $this->entities,
+                    new Model\ArticleTags($this->entities)
+                )
             ),
             $this->identity
         );
