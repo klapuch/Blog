@@ -24,7 +24,7 @@ final class Articles extends BaseControl {
 
     public function createTemplate() {
         $template = parent::createTemplate();
-        $template->articles = $this->articles->iterate();
+        $template->articles = $this->articles;
         return $template;
     }
 

@@ -1,4 +1,5 @@
-{foreach $articles as $article}
+<p>Počet článků: {$articles->count()}</p>
+{foreach $articles->iterate() as $article}
     {control articles-{$article->id()}:preview}
     {sep}<hr>{/sep}
 {/foreach}

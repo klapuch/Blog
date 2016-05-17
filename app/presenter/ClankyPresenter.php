@@ -16,13 +16,6 @@ final class ClankyPresenter extends BasePresenter {
         try {
             $this->template->selectedTag = $tag;
             $this->template->articles = $this->articles();
-            if($tag !== null) {
-                $this->template->articles = new Model\TaggedArticles(
-                    $tag,
-                    $this->entities,
-                    $this->template->articles
-                );
-            }
         } catch(Exception\ExistenceException $ex) {
             $this->error($ex->getMessage());
         }
@@ -91,6 +84,17 @@ final class ClankyPresenter extends BasePresenter {
     }
 
     public function createComponentArticles() {
+        if($this->getParameter('tag') !== null) {
+            return new Component\Articles(
+                $this->entities,
+                new Model\TaggedArticles(
+                    $this->getParameter('tag'),
+                    $this->entities,
+                    $this->articles()
+                ),
+                $this->identity
+            );
+        }
         return new Component\Articles(
             $this->entities,
             $this->articles(),
