@@ -10,6 +10,8 @@ services:
             - allow(guest)
 
             - addResource(Clanek)
+            - addResource(Chyba4xx)
+            - addResource(Chyba)
             - addResource(Default)
             - addResource(Prihlasit)
             - addResource(Odhlasit)

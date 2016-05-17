@@ -1,66 +1,63 @@
-common:
-    includes:
-        - acl.neon
-    parameters:
-
-    php:
-        date.timezone: Europe/Prague
-        default_charset: UTF-8
-        expose_php: 0
-        zlib.output_compression: 1
-        session.name: SESSION
-        error_reporting: 1
-    application:
-        errorPresenter: Chyba
-        mapping:
-            *: Facedown\*Module\Presenter\*Presenter
-    session:
-        autoStart: smart
-        expiration: 14 days
-        #cookie_secure: 1
-        use_strict_mode: 1
-        cookie_httponly: 1
-        entropy_length: 512
-        entropy_file: /dev/urandom
-    http:
-        headers:
-            X-Frame-Options: DENY
-            X-Content-Type-Options: nosniff
-            #Strict-Transport-Security: "max-age=31536000; includeSubDomains; preload"
-            X-XSS-Protection: "1; mode=block;"
-            X-Powered-By: ""
-    forms:
-        messages:
-            FILLED: "%label je pole, které musíte vyplnit"
-            PROTECTION: "Prosím, proveďte operaci znova, došlo k vypršení časového limitu"
-    services:
-        router: Facedown\Router\RouterFactory(@Kdyby\Doctrine\EntityManager)::createRouter
-        texy: Texy\Texy
-        identity: @Facedown\Model\Access\IdentityFactory::create()
-        bcrypt: Facedown\Model\Security\Bcrypt
-        authenticator: Facedown\Model\Access\Authenticator
-        - Nette\Security\Passwords
-        - Facedown\Model\Access\IdentityFactory
-        latte.latteFactory:
-            setup:
-                - addFilter('texy', [@texy, process])
-    extensions:
-        console: Kdyby\Console\DI\ConsoleExtension
-        events: Kdyby\Events\DI\EventsExtension
-        annotations: Kdyby\Annotations\DI\AnnotationsExtension
-        doctrine: Kdyby\Doctrine\DI\OrmExtension
-development < common:
-    doctrine:
-        user: root
-        password:
-        dbname: facedown
-        charset: UTF8
-        driver: pdo_mysql
-        defaultTableOptions:
-            collate: utf8_czech_ci
-        options: [PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        autoGenerateProxyClasses: true
-        metadata:
-            Facedown: %appDir%
-production:
+includes:
+    - acl.neon
+    - config.local.neon
+php:
+    date.timezone: Europe/Prague
+    default_charset: UTF-8
+    expose_php: 0
+    zlib.output_compression: 1
+    session.name: SESSION
+    error_reporting: 1
+application:
+    errorPresenter: Chyba
+    mapping:
+        *: Facedown\*Module\Presenter\*Presenter
+session:
+    autoStart: smart
+    expiration: 14 days
+    #cookie_secure: 1
+    use_strict_mode: 1
+    cookie_httponly: 1
+    entropy_length: 512
+    entropy_file: /dev/urandom
+http:
+    headers:
+        X-Frame-Options: DENY
+        X-Content-Type-Options: nosniff
+        #Strict-Transport-Security: "max-age=31536000; includeSubDomains; preload"
+        X-XSS-Protection: "1; mode=block;"
+        X-Powered-By: ""
+forms:
+    messages:
+        FILLED: "%label je pole, které musíte vyplnit"
+        PROTECTION: "Prosím, proveďte operaci znova, došlo k vypršení časového limitu"
+services:
+    router: Facedown\Router\RouterFactory(@Kdyby\Doctrine\EntityManager)::createRouter
+    texy: Texy\Texy
+    identity: @Facedown\Model\Access\IdentityFactory::create()
+    bcrypt: Facedown\Model\Security\Bcrypt
+    authenticator: Facedown\Model\Access\Authenticator
+    - Nette\Security\Passwords
+    - Facedown\Model\Access\IdentityFactory
+    latte.latteFactory:
+        setup:
+            - addFilter('texy', [@texy, process])
+extensions:
+    console: Kdyby\Console\DI\ConsoleExtension
+    events: Kdyby\Events\DI\EventsExtension
+    annotations: Kdyby\Annotations\DI\AnnotationsExtension
+    doctrine: Kdyby\Doctrine\DI\OrmExtension
+doctrine:
+    host: 127.0.0.1
+    user: root
+    password:
+    dbname: facedown
+    charset: UTF8
+    driver: pdo_mysql
+    defaultTableOptions:
+        collate: utf8_czech_ci
+    options: [PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    autoGenerateProxyClasses: true
+    metadata:
+        Facedown: %appDir%
 
