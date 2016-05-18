@@ -14,7 +14,7 @@
             <td><p>{$message->subject()}</p></td>
             <td><p>{$message->sender()}</p></td>
             <td><p>{$message->date()->format('j.n.Y H:i')}</p></td>
-            <td><p>{$czechStates[$message->state()]}</p></td>
+            <td><p>{_$message->state()}</p></td>
             <td>
                 <p>
                     <a href="{plink Zprava:precist id => $message->id()}">

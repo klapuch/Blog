@@ -21,11 +21,6 @@ final class Inbox extends BaseControl {
     public function render() {
         $this->template->setFile(__DIR__ . '/Inbox.latte');
         $this->template->inbox = $this->inbox;
-        $this->template->czechStates = [
-            'unread' => 'Nepřečteno',
-            'read' => 'Přečteno',
-            'spam' => 'Spam'
-        ];
         $this->template->colors = [
             'unread' => 'success',
             'read' => 'muted',

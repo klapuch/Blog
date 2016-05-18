@@ -19,7 +19,7 @@ final class RouterFactory {
      */
     public static function createRouter() {
         $router = new Routers\RouteList;
-        $router[] = new Routers\Route('clanek/<id [-a-z0-9_]+>', array(
+        $router[] = new Routers\Route('[<locale=cs cs|en>/]clanek/<id [-a-z0-9_]+>', array(
             'presenter' => 'Clanek',
             'action' => 'default',
             'id'  =>  array(
@@ -37,7 +37,10 @@ final class RouterFactory {
                 }
             ),
         ));
-        $router[] = new Routers\Route('<presenter>/<action>[/<id>]', 'Default:default');
+        $router[] = new Routers\Route(
+            '[<locale=cs cs|en>/]<presenter>/<action>[/<id>]',
+            'Default:default'
+        );
         return $router;
     }
 }

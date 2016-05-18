@@ -9,11 +9,17 @@ use Kdyby;
 abstract class BasePresenter extends Nette\Application\UI\Presenter {
     use Nextras\Application\UI\SecuredLinksPresenterTrait;
 
+    /** @persistent */
+    public $locale;
+
     /** @var Kdyby\Doctrine\EntityManager @inject */
     public $entities;
 
     /** @var Nette\Security\IIdentity @inject */
     public $identity;
+
+    /** @var Kdyby\Translation\Translator @inject */
+    public $translator;
 
     public function checkRequirements($element) {
         if($this->signal === null) {
