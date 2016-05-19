@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Facedown\Model;
 
 use Nette,
@@ -50,7 +51,7 @@ final class TaggedArticles extends Nette\Object implements Articles {
     }
 
     public function count(): int {
-        return $this->entities->createQueryBuilder()
+        return (int)$this->entities->createQueryBuilder()
             ->select('COUNT(a)')
             ->from(Article::class, 'a')
             ->leftJoin('a.tags', 't')

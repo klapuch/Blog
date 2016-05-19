@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Facedown\Presenter;
 
 use Facedown\{
@@ -97,7 +98,7 @@ final class ClanekPresenter extends BasePresenter {
                     new Model\Security\Bcrypt(new Security\Passwords)
                 ),
                 $this->identity
-            ))->article($this->getParameter('id'));
+            ))->article((int)$this->getParameter('id'));
         } catch(Exception\ExistenceException $ex) {
             $this->error($ex->getMessage());
         }

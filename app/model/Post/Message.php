@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Facedown\Model\Post;
 
 use Doctrine\ORM\Mapping as ORM;

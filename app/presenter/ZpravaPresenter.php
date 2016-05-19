@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Facedown\Presenter;
 
 use Facedown\{
@@ -19,7 +20,7 @@ final class ZpravaPresenter extends BasePresenter {
         try {
             return (new Post\ImportantInbox(
                 $this->entities
-            ))->message($this->getParameter('id'));
+            ))->message((int)$this->getParameter('id'));
         } catch(Exception\ExistenceException $ex) {
             $this->error($ex->getMessage());
         }
