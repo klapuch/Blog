@@ -38,8 +38,7 @@ final class ArticleForm extends BaseControl {
         $form->addText('title', 'Titulek')
             ->addRule(UI\Form::FILLED, '%label musí být vyplněn')
             ->addRule(UI\Form::MAX_LENGTH, '%label smí mít maximálně %d znaků', 50);
-        $form->addText('tags', 'Tagy')
-            ->addRule(UI\Form::FILLED, '%label musí být vyplněny');
+        $form->addText('tags', 'Tagy');
         $form->addTextArea('content', 'Obsah')
             ->addRule(UI\Form::FILLED, '%label musí být vyplněn')
             ->setAttribute('rows', 20);
