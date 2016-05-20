@@ -7,7 +7,7 @@
         <p><em>Komentář byl smazán správcem webu</em></p>
     {/if}
     {if $user->isAllowed('discussion-discussion') && $comment->visible()}
-        <a n:href="smazat!">
+        <a n:href="erase!">
             <button type="button" class="btn btn-danger">Smazat</button>
         </a>
     {/if}

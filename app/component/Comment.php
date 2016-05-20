@@ -33,7 +33,7 @@ final class Comment extends BaseControl {
     /**
      * @secured
      */
-    public function handleSmazat() {
+    public function handleErase() {
         try {
             $this->comment->erase();
             $this->entities->flush();
