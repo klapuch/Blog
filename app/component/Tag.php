@@ -76,8 +76,7 @@ final class Tag extends BaseControl {
      * @secured
      */
     public function handleRemove() {
-        $tags = new Model\ArticleTags($this->entities);
-        $tags->remove($this->tag);
+        (new Model\ArticleTags($this->entities))->remove($this->tag);
         $this->presenter->redirect('this');
     }
 }
