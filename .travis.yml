@@ -14,8 +14,8 @@ install:
 
 before_script:
   - mysql -u root -e 'CREATE DATABASE facedown;'
-  - mysql -u root facedown < tests/dump.sql
-  - mysql -u root facedown < tests/dataset.sql
+  #- mysql -u root facedown < tests/dump.sql
+  #- mysql -u root facedown < tests/dataset.sql
 
 script:
   - ./vendor/bin/tester -p $TESTER_PHP_BIN -o console -c ./tests/php.ini -s ./tests/
