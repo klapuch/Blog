@@ -33,11 +33,12 @@ final class Articles extends BaseControl {
 
     protected function createComponentArticles() {
         $components = [];
-        foreach($this->articles->iterate() as $article)
+        foreach($this->articles->iterate() as $article) {
             $components[$article->id()] = new Article(
                 $this->entities,
                 $article
             );
+        }
         return new UI\Multiplier(
             function(int $id) use ($components) {
                 return $components[$id];
