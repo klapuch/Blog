@@ -44,24 +44,30 @@ final class ClanekPresenter extends BasePresenter {
     }
 
     public function articleFormSucceeded(UI\Form $form) {
-        $article = $form->values;
-        $this->entities->transactional(function () use ($article) {
-            if(trim($article->tags)) {
-                (new Model\SelectedTags(
-                    $this->entities,
-                    array_reduce(
-                        array_map('trim', explode(',', $article->tags)),
-                        function($previous, string $tag) {
-                            $previous[] = new Model\ArticleTag($tag);
-                            return $previous;
-                        }
-                    )
-                ))->pin($this->article());
-            }
-            $this->article()->edit($article->title, $article->content);
-        });
-        $this->flashMessage('Článek byl upraven', 'success');
-        $this->redirect('Clanek:default', ['id' => $this->getParameter('id')]);
+        try {
+            $article = $form->values;
+            $this->entities->transactional(function () use ($article) {
+                if(trim($article->tags)) {
+                    (new Model\SelectedTags(
+                        $this->entities,
+                        array_reduce(
+                            array_map('trim', explode(',', $article->tags)),
+                            function($previous, string $tag) {
+                                $previous[] = new Model\ArticleTag($tag);
+                                return $previous;
+                            }
+                        )
+                    ))->pin($this->article());
+                }
+                $this->article()->edit($article->title, $article->content);
+            });
+            $this->flashMessage('Článek byl upraven', 'success');
+            $this->redirect('Clanek:default', ['id' => $this->getParameter('id')]);
+        } catch(Exception\ExistenceException $ex) {
+            $form->addError($ex->getMessage());
+        } catch(Exception\DuplicateException $ex) {
+            $form->addError($ex->getMessage());
+        }
     }
 
     public function createComponentCommentForm() {
