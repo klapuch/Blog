@@ -9,25 +9,15 @@ use Facedown\Exception\ExistenceException;
 
 final class Users extends Nette\Object {
     private $entities;
-    private $cipher;
     private $users;
 
-    public function __construct(
-        Doctrine\EntityManager $entities,
-        Security\Cipher $cipher
-    ) {
+    public function __construct(Doctrine\EntityManager $entities) {
         $this->entities = $entities;
-        $this->cipher = $cipher;
         $this->users = $entities->getRepository(User::class);
     }
 
-    public function register(string $username, string $password): User {
+    public function register(User $user): User {
         try {
-            $user = new User(
-                $username,
-                $this->cipher->encrypt($password),
-                $this->entities->getRepository(Role::class)->findOneByName('member')
-            );
             $this->entities->persist($user);
             $this->entities->flush($user);
             return $user;
@@ -35,7 +25,7 @@ final class Users extends Nette\Object {
             throw new ExistenceException(
                 sprintf(
                     'Uživatelské jméno %s již existuje',
-                    $username
+                    $user->username()
                 )
             );
         }

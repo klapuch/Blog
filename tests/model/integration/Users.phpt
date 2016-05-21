@@ -28,11 +28,17 @@ final class Users extends TestCase\Database {
     }
 
     public function testRegistration() {
-        $registeredUser = $this->users->register('newUser', 'secret :)');
+        $registeredUser = $this->users->register(
+            new Model\User(
+                'newUser',
+                'secret :)',
+                $this->entities->find(Model\Role::class, 1)
+            )
+        );
         Assert::same(3, $registeredUser->id());
-        Assert::same('encrypted', $registeredUser->password());
+        Assert::same('secret :)', $registeredUser->password());
         Assert::same('newUser', $registeredUser->username());
-        Assert::same('member', (string)$registeredUser->role());
+        Assert::same('creator', (string)$registeredUser->role());
     }
 
     public function testUser() {
@@ -51,8 +57,20 @@ final class Users extends TestCase\Database {
      * @throws \Facedown\Exception\ExistenceException Uživatelské jméno newUser již existuje
      */
     public function testRegisteringDuplicate() {
-        $this->users->register('newUser', 'secret :)');
-        $this->users->register('newUser', 'secret :)');
+        $this->users->register(
+            new Model\User(
+                'newUser',
+                'secret :)',
+                $this->entities->find(Model\Role::class, 1)
+            )
+        );
+        $this->users->register(
+            new Model\User(
+                'newUser',
+                'secret :)',
+                $this->entities->find(Model\Role::class, 1)
+            )
+        );
     }
 }
 

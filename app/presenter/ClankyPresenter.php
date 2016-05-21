@@ -42,7 +42,7 @@ final class ClankyPresenter extends BasePresenter {
                         new Model\Article(
                             $article->title,
                             $article->content,
-                            (new Model\Users($this->entities, $this->cipher))
+                            (new Model\Users($this->entities))
                                 ->user($this->identity->getId())
                         )
                     );
