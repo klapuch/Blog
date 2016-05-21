@@ -15,8 +15,6 @@ final class IdentityFactory {
      * @return Security\IIdentity
      */
     public function create(): Security\IIdentity {
-        if($this->user->identity === null)
-            return new NoOneIdentity;
-        return $this->user->identity;
+        return $this->user->identity ?? new NoOneIdentity;
     }
 }
