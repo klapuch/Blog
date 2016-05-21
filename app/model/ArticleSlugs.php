@@ -5,7 +5,9 @@ namespace Facedown\Model;
 use Nette;
 use Kdyby\Doctrine;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Facedown\Exception\ExistenceException;
+use Facedown\Exception\{
+    ExistenceException, DuplicateException
+};
 
 final class ArticleSlugs extends Nette\Object implements Slugs {
     private $entities;
@@ -46,7 +48,7 @@ final class ArticleSlugs extends Nette\Object implements Slugs {
             $this->entities->flush();
             return $slug;
         } catch(UniqueConstraintViolationException $ex) {
-            throw new ExistenceException('Tento slug již existuje');
+            throw new DuplicateException('Tento slug již existuje');
         }
     }
 }

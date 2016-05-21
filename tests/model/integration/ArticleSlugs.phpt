@@ -53,7 +53,7 @@ final class ArticleSlugs extends TestCase\Database {
     }
 
     /**
-     * @throws \Facedown\Exception\ExistenceException Tento slug již existuje
+     * @throws \Facedown\Exception\DuplicateException Tento slug již existuje
      */
     public function testAddingDuplicate() {
         $this->slugs->add(2, 'bla-bla');

@@ -38,7 +38,7 @@ final class SelectedTags extends TestCase\Database {
     }
 
     /**
-     * @throws \Facedown\Exception\ExistenceException Tag již existuje
+     * @throws \Facedown\Exception\DuplicateException Tag již existuje
      */
     public function testDuplicatePinning() {
         (new Model\SelectedTags(

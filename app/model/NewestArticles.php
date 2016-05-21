@@ -5,7 +5,9 @@ namespace Facedown\Model;
 use Nette;
 use Kdyby\Doctrine;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Facedown\Exception\ExistenceException;
+use Facedown\Exception\{
+    ExistenceException, DuplicateException
+};
 
 final class NewestArticles extends Nette\Object implements Articles {
     private $entities;
@@ -22,7 +24,7 @@ final class NewestArticles extends Nette\Object implements Articles {
             $this->entities->flush();
             return $article;
         } catch(UniqueConstraintViolationException $ex) {
-            throw new ExistenceException(
+            throw new DuplicateException(
                 sprintf(
                     'Titulek %s již existuje',
                     $article->title()

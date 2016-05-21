@@ -74,7 +74,7 @@ final class NewestArticles extends TestCase\Database {
     }
 
     /**
-     * @throws \Facedown\Exception\ExistenceException Titulek newTitle již existuje
+     * @throws \Facedown\Exception\DuplicateException Titulek newTitle již existuje
      */
     public function testPublishingDuplicate() {
         $this->articles->publish(

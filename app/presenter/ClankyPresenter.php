@@ -68,6 +68,8 @@ final class ClankyPresenter extends BasePresenter {
             $this->redirect('Clanek:default', ['id' => $publishedArticle->id()]);
         } catch(Exception\ExistenceException $ex) {
             $form->addError($ex->getMessage());
+        } catch(Exception\DuplicateException $ex) {
+            $form->addError($ex->getMessage());
         }
     }
 

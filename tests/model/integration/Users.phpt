@@ -54,7 +54,7 @@ final class Users extends TestCase\Database {
     }
 
     /**
-     * @throws \Facedown\Exception\ExistenceException Uživatelské jméno newUser již existuje
+     * @throws \Facedown\Exception\DuplicateException Uživatelské jméno newUser již existuje
      */
     public function testRegisteringDuplicate() {
         $this->users->register(

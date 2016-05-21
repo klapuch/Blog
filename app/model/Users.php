@@ -5,7 +5,9 @@ namespace Facedown\Model;
 use Nette;
 use Kdyby\Doctrine;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Facedown\Exception\ExistenceException;
+use Facedown\Exception\{
+    ExistenceException, DuplicateException
+};
 
 final class Users extends Nette\Object {
     private $entities;
@@ -22,7 +24,7 @@ final class Users extends Nette\Object {
             $this->entities->flush($user);
             return $user;
         } catch(UniqueConstraintViolationException $ex) {
-            throw new ExistenceException(
+            throw new DuplicateException(
                 sprintf(
                     'Uživatelské jméno %s již existuje',
                     $user->username()
