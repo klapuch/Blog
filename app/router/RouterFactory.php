@@ -24,17 +24,17 @@ final class RouterFactory {
             'presenter' => 'Clanek',
             'action' => 'default',
             'id'  =>  array(
-                Routers\Route::FILTER_IN => function ($slug) {
+                Routers\Route::FILTER_IN => function (string $slug) {
                     return (new Model\ArticleSlugs(
                         static::$entities,
                         new Fake\Articles
-                    ))->slug((string)$slug)->origin();
+                    ))->slug($slug)->origin();
                 },
-                Routers\Route::FILTER_OUT => function ($id) {
+                Routers\Route::FILTER_OUT => function (int $id) {
                     return (string)(new Model\ArticleSlugs(
                         static::$entities,
                         new Fake\Articles
-                    ))->slug((int)$id);
+                    ))->slug($id);
                 }
             ),
         ));
