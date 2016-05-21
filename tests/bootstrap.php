@@ -19,7 +19,7 @@ $configuration = new Nette\Configurator;
 $configuration->setDebugMode(false);
 $configuration->setTempDirectory(__DIR__ . '/temp');
 $configuration->createRobotLoader()
-    ->addDirectory(__DIR__ . '/testCase')
+    ->addDirectory(__DIR__ . '/TestCase')
     ->register();
 $configuration->addConfig(__DIR__ . '/test.neon');
 return $configuration->createContainer();
