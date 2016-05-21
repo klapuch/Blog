@@ -45,10 +45,7 @@ final class Tags extends BaseControl {
     protected function createComponentTags() {
         $components = [];
         foreach($this->tags->iterate() as $tag)
-            $components[$tag->id()] = new Tag(
-                $this->entities,
-                $tag
-            );
+            $components[$tag->id()] = new Tag($this->entities, $tag);
         return new UI\Multiplier(
             function(int $id) use ($components) {
                 return $components[$id];
