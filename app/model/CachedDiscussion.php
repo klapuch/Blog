@@ -22,8 +22,8 @@ final class CachedDiscussion extends Nette\Object implements Discussion {
         return $this->read(__FUNCTION__, $id);
     }
 
-    public function post(string $content, string $author): Comment {
-        return $this->origin->post($content, $author);
+    public function post(Comment $comment): Comment {
+        return $this->origin->post($comment);
     }
 
     public function count(): int {

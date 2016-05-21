@@ -8,11 +8,16 @@ use Nette\Application\UI;
 
 final class CommentForm extends BaseControl {
     private $discussion;
+    private $article;
     public $onSuccess = [];
 
-    public function __construct(Model\Discussion $discussion) {
+    public function __construct(
+        Model\Discussion $discussion,
+        Model\Article $article
+    ) {
         parent::__construct();
         $this->discussion = $discussion;
+        $this->article = $article;
     }
 
     public function render() {
@@ -37,7 +42,13 @@ final class CommentForm extends BaseControl {
 
     protected function formSucceeded(UI\Form $form) {
         $comment = $form->values;
-        $this->discussion->post($comment->content, $comment->author);
+        $this->discussion->post(
+            new Model\ArticleComment(
+                $comment->content,
+                $comment->author,
+                $this->article
+            )
+        );
         $this->onSuccess();
     }
 }

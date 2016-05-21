@@ -27,12 +27,7 @@ class ArticleDiscussion extends Nette\Object implements Discussion {
         );
     }
 
-    public function post(string $content, string $author): Comment {
-        $comment = new ArticleComment(
-            $content,
-            $author,
-            $this->article
-        );
+    public function post(Comment $comment): Comment {
         $this->entities->persist($comment);
         $this->entities->flush();
         return $comment;

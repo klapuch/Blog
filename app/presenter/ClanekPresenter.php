@@ -65,7 +65,10 @@ final class ClanekPresenter extends BasePresenter {
     }
 
     public function createComponentCommentForm() {
-        $form = new Component\CommentForm($this->discussion($this->article()));
+        $form = new Component\CommentForm(
+            $this->discussion($this->article()),
+            $this->article()
+        );
         $form->onSuccess[] = function() {
             $this->flashMessage('Komentář byl zveřejněn', 'success');
             $this->redirect('this');

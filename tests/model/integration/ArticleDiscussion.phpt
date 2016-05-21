@@ -16,14 +16,18 @@ use Nette\Security;
 require __DIR__ . '/../../bootstrap.php';
 
 final class ArticleDiscussion extends TestCase\Database {
-    /** @var $articles Model\Discussion */
+    /** @var $discussion Model\Discussion */
     private $discussion;
+
+    /** @var $article Model\Article */
+    private $article;
 
     public function setUp() {
         parent::setUp();
+        $this->article = $this->entities->find(Model\Article::class, 1);
         $this->discussion = new Model\ArticleDiscussion(
             $this->entities,
-            $this->entities->find(Model\Article::class, 1)
+            $this->article
         );
     }
 
@@ -65,7 +69,13 @@ final class ArticleDiscussion extends TestCase\Database {
     }
 
     public function testPosting() {
-        $comment = $this->discussion->post('some new content', 'noOne');
+        $comment = $this->discussion->post(
+            new Model\ArticleComment(
+                'some new content',
+                'noOne',
+                $this->article
+            )
+        );
         Assert::same(5, $comment->id());
         Assert::same(4, $this->discussion->count());
     }
