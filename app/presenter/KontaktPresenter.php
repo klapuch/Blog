@@ -3,8 +3,9 @@ declare(strict_types = 1);
 namespace Facedown\Presenter;
 
 use Facedown\{
-    Model, Exception, Component
+    Exception, Component
 };
+use Facedown\Model\Post;
 use Nette\Security,
     Nette\Application\UI;
 
@@ -29,8 +30,14 @@ final class KontaktPresenter extends BasePresenter {
 
     public function contactFormSucceeded(UI\Form $form) {
         $message = $form->values;
-        (new Model\Post\ImportantInbox($this->entities))
-            ->put($message->subject, $message->content, $message->username);
+        (new Post\ImportantInbox($this->entities))
+            ->put(
+                new Post\Message(
+                    $message->subject,
+                    $message->content,
+                    $message->username
+                )
+            );
         $this->flashMessage('Zpráva byla odeslána', 'success');
         $this->redirect('this');
     }

@@ -24,7 +24,9 @@ final class ImportantInbox extends TestCase\Database {
     }
 
     public function testPutting() {
-        $message = $this->inbox->put('ssubject', 'ccontent', 'ssender');
+        $message = $this->inbox->put(
+            new Post\Message('ssubject', 'ccontent', 'ssender')
+        );
         Assert::same(5, $message->id());
         Assert::same(5, $this->inbox->count());
     }
