@@ -18,14 +18,9 @@ final class Message extends BaseControl {
         $this->message = $message;
     }
 
-    protected function createTemplate() {
-        $template = parent::createTemplate();
-        $template->message = $this->message;
-        return $template;
-    }
-
     public function render() {
         $this->template->setFile(__DIR__ . '/Message.latte');
+        $this->template->message = $this->message;
         $this->template->render();
     }
 
