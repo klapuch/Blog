@@ -13,6 +13,9 @@ use Nette\Security,
     Nette\Utils\Strings;
 
 final class ClankyPresenter extends BasePresenter {
+    /** @var \Facedown\Model\Security\Cipher @inject */
+    public $cipher;
+
     public function renderDefault(string $tag = null) {
         try {
             $this->template->selectedTag = $tag;
@@ -23,11 +26,7 @@ final class ClankyPresenter extends BasePresenter {
     }
 
     public function createComponentArticleForm() {
-        $form = new Component\ArticleForm(
-            $this->entities,
-            new Fake\Tags,
-            new Fake\Identity
-        );
+        $form = new Component\ArticleForm($this->entities, new Fake\Tags);
         $form->onSuccess[] = function(UI\Form $form) {
             $this->articleFormSucceeded($form);
         };
@@ -40,16 +39,18 @@ final class ClankyPresenter extends BasePresenter {
             $publishedArticle = $this->entities->transactional(
                 function() use($article) {
                     $publishedArticle = $this->articles()->publish(
-                        $article->title,
-                        $article->content
+                        new Model\Article(
+                            $article->title,
+                            $article->content,
+                            (new Model\Users($this->entities, $this->cipher))
+                                ->user($this->identity->getId())
+                        )
                     );
-                    (new Model\ArticleSlugs(
-                        $this->entities,
-                        $this->articles()
-                    ))->add(
-                        $publishedArticle->id(),
-                        Strings::webalize($publishedArticle->title())
-                    );
+                    (new Model\ArticleSlugs($this->entities, $this->articles()))
+                        ->add(
+                            $publishedArticle->id(),
+                            Strings::webalize($publishedArticle->title())
+                        );
                     (new Model\SelectedTags(
                         $this->entities,
                         array_reduce(
@@ -79,8 +80,7 @@ final class ClankyPresenter extends BasePresenter {
                     $this->entities,
                     new Model\ArticleTags($this->entities)
                 )
-            ),
-            $this->identity
+            )
         );
     }
 
@@ -92,28 +92,16 @@ final class ClankyPresenter extends BasePresenter {
                     $this->getParameter('tag'),
                     $this->entities,
                     $this->articles()
-                ),
-                $this->identity
+                )
             );
         }
-        return new Component\Articles(
-            $this->entities,
-            $this->articles(),
-            $this->identity
-        );
+        return new Component\Articles($this->entities, $this->articles());
     }
 
     private function articles() {
         return new Model\CachedArticles(
             new Storages\MemoryStorage,
-            new Model\NewestArticles(
-                $this->entities,
-                new Model\Users(
-                    $this->entities,
-                    new Model\Security\Bcrypt(new Security\Passwords)
-                ),
-                $this->identity
-            )
+            new Model\NewestArticles($this->entities)
         );
     }
 }

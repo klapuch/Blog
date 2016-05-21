@@ -21,11 +21,7 @@ final class NewestArticles extends TestCase\Database {
 
     public function setUp() {
         parent::setUp();
-        $this->articles = new Model\NewestArticles(
-            $this->entities,
-            new Model\Users($this->entities, new Fake\Cipher),
-            new Fake\Identity(1)
-        );
+        $this->articles = new Model\NewestArticles($this->entities);
     }
 
     public function testCounting() {
@@ -60,7 +56,13 @@ final class NewestArticles extends TestCase\Database {
     }
 
     public function testPublishing() {
-        $publishedArticle = $this->articles->publish('newTitle', 'newContent');
+        $publishedArticle = $this->articles->publish(
+            new Model\Article(
+                'newTitle',
+                'newContent',
+                $this->entities->find(Model\User::class, 1)
+            )
+        );
         Assert::same(4, $publishedArticle->id());
         Assert::same('newTitle', $publishedArticle->title());
         Assert::same('newContent', $publishedArticle->content());
@@ -75,8 +77,19 @@ final class NewestArticles extends TestCase\Database {
      * @throws \Facedown\Exception\ExistenceException Titulek newTitle již existuje
      */
     public function testPublishingDuplicate() {
-        $this->articles->publish('newTitle', 'newContent');
-        $this->articles->publish('newTitle', 'newContent');
+        $this->articles->publish(
+            new Model\Article('newTitle',
+                'newContent',
+                $this->entities->find(Model\User::class, 1)
+            )
+        );
+        $this->articles->publish(
+            new Model\Article(
+                'newTitle',
+                'newContent',
+                $this->entities->find(Model\User::class, 1)
+            )
+        );
     }
 }
 

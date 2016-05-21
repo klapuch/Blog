@@ -9,17 +9,14 @@ use Nette\Security;
 final class Article extends BaseControl {
     private $entities;
     private $article;
-    private $identity;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Article $article,
-        Security\IIdentity $identity
+        Model\Article $article
     ) {
         parent::__construct();
         $this->entities = $entities;
         $this->article = $article;
-        $this->identity = $identity;
     }
 
     protected function createTemplate() {
@@ -44,8 +41,7 @@ final class Article extends BaseControl {
             new Model\SelectedTags(
                 $this->entities,
                 $this->article->tags()->toArray()
-            ),
-            $this->identity
+            )
         );
     }
 }

@@ -10,17 +10,14 @@ use Nette\Application\UI,
 final class Tag extends BaseControl {
     private $entities;
     private $tag;
-    private $identity;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Tag $tag,
-        Security\IIdentity $identity
+        Model\Tag $tag
     ) {
         parent::__construct();
         $this->entities = $entities;
         $this->tag = $tag;
-        $this->identity = $identity;
     }
 
     protected function createTemplate() {
@@ -59,14 +56,7 @@ final class Tag extends BaseControl {
      */
     public function handlePin(int $articleId) {
         $this->tag->pin(
-            (new Model\NewestArticles(
-                $this->entities,
-                new Model\Users(
-                    $this->entities,
-                    new Model\Security\Bcrypt(new Security\Passwords)
-                ),
-                $this->identity
-            ))->article($articleId)
+            (new Model\NewestArticles($this->entities))->article($articleId)
         );
         $this->entities->flush();
         $this->presenter->redirect('this');

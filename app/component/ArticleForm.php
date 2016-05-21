@@ -13,18 +13,15 @@ use Nette\Application\UI,
 final class ArticleForm extends BaseControl {
     private $entities;
     private $tags;
-    private $identity;
     public $onSuccess = [];
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Tags $tags,
-        Security\IIdentity $identity
+        Model\Tags $tags
     ) {
         parent::__construct();
         $this->entities = $entities;
         $this->tags = $tags;
-        $this->identity = $identity;
     }
 
     public function render(Model\Article $article = null) {
@@ -51,10 +48,6 @@ final class ArticleForm extends BaseControl {
     }
 
     protected function createComponentTags() {
-        return new Tags(
-            $this->entities,
-            $this->tags,
-            $this->identity
-        );
+        return new Tags($this->entities, $this->tags);
     }
 }

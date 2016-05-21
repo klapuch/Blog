@@ -35,8 +35,7 @@ final class ClanekPresenter extends BasePresenter {
                     $this->entities,
                     $this->article()->tags()->toArray()
                 )
-            ),
-            $this->identity
+            )
         );
         $form->onSuccess[] = function(UI\Form $form) {
             $this->articleFormSucceeded($form);
@@ -75,11 +74,7 @@ final class ClanekPresenter extends BasePresenter {
     }
 
     public function createComponentArticle() {
-        return new Component\Article(
-            $this->entities,
-            $this->article(),
-            $this->identity
-        );
+        return new Component\Article($this->entities, $this->article());
     }
 
     public function createComponentDiscussion() {
@@ -91,14 +86,8 @@ final class ClanekPresenter extends BasePresenter {
 
     private function article(): Model\Article {
         try {
-            return (new Model\NewestArticles(
-                $this->entities,
-                new Model\Users(
-                    $this->entities,
-                    new Model\Security\Bcrypt(new Security\Passwords)
-                ),
-                $this->identity
-            ))->article((int)$this->getParameter('id'));
+            return (new Model\NewestArticles($this->entities))
+                ->article((int)$this->getParameter('id'));
         } catch(Exception\ExistenceException $ex) {
             $this->error($ex->getMessage());
         }

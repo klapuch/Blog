@@ -41,8 +41,8 @@ final class TaggedArticles extends TestCase\Database {
     /**
      * @throws \Facedown\Exception\ExistenceException Pro tag fooBar???? nebyly nalezeny žádné články
      */
-    public function testIteratingOnUnknownTag() {
-        (new Model\TaggedArticles(
+    public function testIteratingByUnknownTag() {
+        $x = (new Model\TaggedArticles(
             'fooBar????',
             $this->entities,
             new Fake\Articles

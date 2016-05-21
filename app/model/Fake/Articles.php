@@ -9,7 +9,7 @@ final class Articles implements Model\Articles {
 
     }
 
-    public function publish(string $title, string $content): Model\Article {
+    public function publish(Model\Article $article): Model\Article {
 
     }
 

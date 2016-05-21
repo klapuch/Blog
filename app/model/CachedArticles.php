@@ -17,8 +17,8 @@ final class CachedArticles implements Articles {
         return $this->read(__FUNCTION__);
     }
 
-    public function publish(string $title, string $content): Article {
-        return $this->origin->publish($title, $content);
+    public function publish(Article $article): Article {
+        return $this->origin->publish($article);
     }
 
     public function article(int $id): Article {

@@ -10,17 +10,14 @@ use Nette\Application\UI,
 final class Tags extends BaseControl {
     private $entities;
     private $tags;
-    private $identity;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Tags $tags,
-        Security\IIdentity $identity
+        Model\Tags $tags
     ) {
         parent::__construct();
         $this->entities = $entities;
         $this->tags = $tags;
-        $this->identity = $identity;
     }
 
     public function createTemplate() {
@@ -50,8 +47,7 @@ final class Tags extends BaseControl {
         foreach($this->tags->iterate() as $tag)
             $components[$tag->id()] = new Tag(
                 $this->entities,
-                $tag,
-                $this->identity
+                $tag
             );
         return new UI\Multiplier(
             function(int $id) use ($components) {

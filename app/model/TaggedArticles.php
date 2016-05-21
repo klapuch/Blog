@@ -2,8 +2,7 @@
 declare(strict_types = 1);
 namespace Facedown\Model;
 
-use Nette,
-    Nette\Security;
+use Nette;
 use Kdyby\Doctrine;
 use Facedown\Exception;
 
@@ -22,8 +21,8 @@ final class TaggedArticles extends Nette\Object implements Articles {
         $this->origin = $origin;
     }
 
-    public function publish(string $title, string $content): Article {
-        return $this->origin->publish($title, $content);
+    public function publish(Article $article): Article {
+        return $this->origin->publish($article);
     }
 
     public function article(int $id): Article {
@@ -31,15 +30,7 @@ final class TaggedArticles extends Nette\Object implements Articles {
     }
 
     public function iterate(): array {
-        if($this->count() === 0) {
-            throw new Exception\ExistenceException(
-                sprintf(
-                    'Pro tag %s nebyly nalezeny žádné články',
-                    $this->tag
-                )
-            );
-        }
-        return $this->entities->createQueryBuilder()
+        $articles = $this->entities->createQueryBuilder()
             ->select(['articles', 'tags'])
             ->from(Article::class, 'articles')
             ->leftJoin('articles.tags', 'tags')
@@ -48,6 +39,14 @@ final class TaggedArticles extends Nette\Object implements Articles {
             ->setParameter('tag', $this->tag)
             ->getQuery()
             ->getResult();
+        if(!empty($articles))
+            return $articles;
+        throw new Exception\ExistenceException(
+            sprintf(
+                'Pro tag %s nebyly nalezeny žádné články',
+                $this->tag
+            )
+        );
     }
 
     public function count(): int {
