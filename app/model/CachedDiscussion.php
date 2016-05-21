@@ -2,9 +2,10 @@
 declare(strict_types = 1);
 namespace Facedown\Model;
 
-use Nette\Caching;
+use Nette,
+    Nette\Caching;
 
-final class CachedDiscussion implements Discussion {
+final class CachedDiscussion extends Nette\Object implements Discussion {
     private $cache;
     private $origin;
 

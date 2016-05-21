@@ -2,11 +2,12 @@
 declare(strict_types = 1);
 namespace Facedown\Model;
 
+use Nette;
 use Kdyby\Doctrine;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Facedown\Exception\ExistenceException;
 
-final class ArticleSlugs implements Slugs {
+final class ArticleSlugs extends Nette\Object implements Slugs {
     private $entities;
     private $articles;
     private $slugs;

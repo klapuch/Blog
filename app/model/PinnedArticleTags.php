@@ -2,10 +2,11 @@
 declare(strict_types = 1);
 namespace Facedown\Model;
 
+use Nette;
 use Facedown\Exception;
 use Kdyby\Doctrine;
 
-final class PinnedArticleTags implements Tags {
+final class PinnedArticleTags extends Nette\Object implements Tags {
     private $entities;
     private $origin;
 

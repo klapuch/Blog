@@ -2,10 +2,11 @@
 declare(strict_types = 1);
 namespace Facedown\Model;
 
+use Nette;
 use Facedown\Exception;
 use Kdyby\Doctrine;
 
-final class ArticleTags implements Tags {
+final class ArticleTags extends Nette\Object implements Tags {
     private $entities;
 
     public function __construct(Doctrine\EntityManager $entities) {

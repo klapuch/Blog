@@ -2,9 +2,10 @@
 declare(strict_types = 1);
 namespace Facedown\Model\Security;
 
-use Nette\Security;
+use Nette,
+    Nette\Security;
 
-final class Bcrypt implements Cipher {
+final class Bcrypt extends Nette\Object implements Cipher {
     const COST = 12;
     private $password;
 

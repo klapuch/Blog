@@ -2,9 +2,10 @@
 declare(strict_types = 1);
 namespace Facedown\Model;
 
-use Nette\Caching;
+use Nette,
+    Nette\Caching;
 
-final class CachedTags implements Tags {
+final class CachedTags extends Nette\Object implements Tags {
     private $cache;
     private $origin;
 

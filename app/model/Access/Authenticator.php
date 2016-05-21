@@ -4,11 +4,12 @@ namespace Facedown\Model\Access;
 
 use Facedown\Model;
 use Kdyby\Doctrine;
+use Nette;
 use Nette\Security\{
     IAuthenticator, AuthenticationException, Identity
 };
 
-final class Authenticator implements IAuthenticator {
+final class Authenticator extends Nette\Object implements IAuthenticator {
     private $entities;
     private $cipher;
 

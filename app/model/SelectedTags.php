@@ -2,11 +2,12 @@
 declare(strict_types = 1);
 namespace Facedown\Model;
 
+use Nette;
 use Facedown\Exception;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Kdyby\Doctrine;
 
-final class SelectedTags implements Tags {
+final class SelectedTags extends Nette\Object implements Tags {
     private $entities;
 
     /**
