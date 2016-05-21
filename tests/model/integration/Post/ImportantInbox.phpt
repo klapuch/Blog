@@ -23,8 +23,8 @@ final class ImportantInbox extends TestCase\Database {
         $this->inbox = new Post\ImportantInbox($this->entities);
     }
 
-    public function testPutting() {
-        $message = $this->inbox->put(
+    public function testReceiving() {
+        $message = $this->inbox->receive(
             new Post\Message('ssubject', 'ccontent', 'ssender')
         );
         Assert::same(5, $message->id());

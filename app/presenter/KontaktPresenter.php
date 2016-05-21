@@ -31,7 +31,7 @@ final class KontaktPresenter extends BasePresenter {
     public function contactFormSucceeded(UI\Form $form) {
         $message = $form->values;
         (new Post\ImportantInbox($this->entities))
-            ->put(
+            ->receive(
                 new Post\Message(
                     $message->subject,
                     $message->content,

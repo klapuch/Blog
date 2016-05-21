@@ -15,7 +15,7 @@ final class ImportantInbox extends Nette\Object implements Inbox {
         $this->inbox = $entities->getRepository(Message::class);
     }
 
-    public function put(Message $message): Message {
+    public function receive(Message $message): Message {
         $this->entities->persist($message);
         $this->entities->flush();
         return $message;
