@@ -44,16 +44,11 @@ class ArticleSlug implements Slug {
     }
 
     public function rename(string $name): Slug {
-        if(!$this->isSlug($name)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    '%s není slug',
-                    $name
-                )
-            );
+        if($this->isSlug($name)) {
+            $this->name = $name;
+            return $this;
         }
-        $this->name = $name;
-        return $this;
+        throw new \InvalidArgumentException(sprintf('%s není slug', $name));
     }
 
     private function isSlug(string $slug): bool {
