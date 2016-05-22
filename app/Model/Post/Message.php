@@ -88,6 +88,8 @@ class Message {
 
     /**
      * Change state of the current message
+     * @param string $state
+     * @return Message
      */
     public function mark(string $state): self {
         if(in_array($state, [self::READ, self::UNREAD, self::SPAM], true))
