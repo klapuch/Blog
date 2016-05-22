@@ -57,7 +57,7 @@ final class TagColors implements Colors, \ArrayAccess {
         );
     }
 
-    private function exists(Color $color) {
+    private function exists(Color $color): bool {
         try {
             return (bool)$this->color($color->name());
         } catch(Exception\ExistenceException $ex) {
