@@ -6,7 +6,7 @@ use Nette;
 use Kdyby\Doctrine;
 use Facedown\Exception;
 
-class ArticleDiscussion extends Nette\Object implements Discussion {
+final class ArticleDiscussion extends Nette\Object implements Discussion {
     private $entities;
     private $article;
     private $comments;
