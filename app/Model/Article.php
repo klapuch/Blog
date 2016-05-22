@@ -83,6 +83,10 @@ class Article {
         return $this->author;
     }
 
+    /**
+     * TODO: I don't like it
+     * @return Collections\Collection
+     */
     public function tags(): Collections\Collection {
         return $this->tags;
     }
