@@ -27,7 +27,7 @@ interface Tags {
     public function tag(int $id): Tag;
 
     /**
-     * Remove tag from the current tags
+     * Remove tag from the current tags, not tag itself
      * @param Tag $tag
      */
     public function remove(Tag $tag);
