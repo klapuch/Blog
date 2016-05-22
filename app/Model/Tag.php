@@ -6,8 +6,8 @@ interface Tag {
     public function id(): int;
 
     /**
-     * @param mixed $target
      * Pin the current tag to the given target
+     * @param mixed $target
      */
     public function pin($target);
 
