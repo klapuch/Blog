@@ -4,12 +4,14 @@ namespace Facedown\Model\Security;
 
 interface Cipher {
     /**
+     * Encrypt the given plain text by the cipher
      * @param string $plain
      * @return string
      */
     public function encrypt(string $plain): string;
 
     /**
+     * Check whether the plain text is the same as hash
      * @param string $plain
      * @param string $hash
      * @return bool
