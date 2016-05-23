@@ -44,24 +44,26 @@ final class TagColors extends Tester\TestCase {
             ->add(new Fake\Color('OOP', '#ffffff'));
     }
 
-    public function testColor() {
+    public function testGivingKnownColor() {
         $color = (new Model\TagColors($this->preparedFilesystem()))
             ->color('OOP');
         Assert::equal(new Model\HexColor('OOP', '#abcdef'), $color);
     }
 
-    public function testColorWithArrayAccess() {
-        $colors = new Model\TagColors($this->preparedFilesystem());
-        Assert::true(isset($colors['OOP']));
-        Assert::false(isset($colors['foo']));
+    public function testUnknownColor() {
+        Assert::exception(function () {
+            (new Model\TagColors($this->preparedFilesystem()))
+                ->color('foo');
+        }, \Facedown\Exception\ExistenceException::class, 'Barva foo neexistuje');
+        Assert::false(
+            (new Model\TagColors($this->preparedFilesystem()))->exists('foo')
+        );
     }
 
-    /**
-     * @throws \Facedown\Exception\ExistenceException Barva foo neexistuje
-     */
-    public function testUnknownColor() {
-        (new Model\TagColors($this->preparedFilesystem()))
-            ->color('foo');
+    public function testExistingColor() {
+        Assert::true(
+            (new Model\TagColors($this->preparedFilesystem()))->exists('OOP')
+        );
     }
 
     protected function preparedFilesystem() {

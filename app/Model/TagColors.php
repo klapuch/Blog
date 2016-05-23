@@ -5,7 +5,7 @@ namespace Facedown\Model;
 use Facedown\Exception;
 use Nette\NotImplementedException;
 
-final class TagColors implements Colors, \ArrayAccess {
+final class TagColors implements Colors {
     private $path;
     const PARSE_SECTIONS = false;
     const PRESERVE_TYPES = INI_SCANNER_TYPED;
@@ -30,7 +30,7 @@ final class TagColors implements Colors, \ArrayAccess {
     }
 
     public function add(Color $color): Color {
-        if ($this->exists($color)) {
+        if ($this->exists($color->name())) {
             throw new Exception\DuplicateException(
                 sprintf('Barva %s již existuje', $color->name())
             );
@@ -44,51 +44,28 @@ final class TagColors implements Colors, \ArrayAccess {
     }
 
     public function color(string $name): Color {
+        if(!$this->exists($name)) {
+            throw new Exception\ExistenceException(
+                sprintf('Barva %s neexistuje', $name)
+            );
+        }
+        return current(
+            array_filter(
+                $this->iterate(),
+                function (Color $color) use ($name) {
+                    return $color->name() === $name;
+                }
+            )
+        );
+    }
+
+    public function exists(string $name): bool {
         $colors = array_filter(
             $this->iterate(),
             function (Color $color) use ($name) {
                 return $color->name() === $name;
             }
         );
-        if(count($colors) === 1)
-            return current($colors);
-        throw new Exception\ExistenceException(
-            sprintf('Barva %s neexistuje', $name)
-        );
-    }
-
-    private function exists(Color $color): bool {
-        try {
-            return (bool)$this->color($color->name());
-        } catch(Exception\ExistenceException $ex) {
-            return false;
-        }
-    }
-
-    /** ArrayAccess implementation */
-
-    public function offsetSet($offset, $value) {
-        throw new NotImplementedException('Set is not implemented');
-    }
-
-    public function offsetExists($name) {
-        return $this->exists(new class ($name) implements Color {
-            private $name;
-            public function __construct(string $name) {
-                $this->name = $name;
-            }
-            public function print(): string {   }
-            public function name(): string {
-                return $this->name;
-            }
-        });
-    }
-
-    public function offsetUnset($offset) {
-        throw new NotImplementedException('Unset is not implemented');
-    }
-
-    public function offsetGet($offset) {
-        throw new NotImplementedException('Get is not implemented');
+        return count($colors) > 0;
     }
 }
