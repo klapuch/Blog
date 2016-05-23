@@ -10,6 +10,9 @@ use Nette\Security,
     Nette\Caching\Storages;
 
 final class ClanekPresenter extends BasePresenter {
+    /** @var \Facedown\Model\TagColors @inject */
+    public $tagColors;
+
     public function renderDefault(int $id) {
         $article = $this->article();
         $this->template->article = $article;
@@ -29,12 +32,16 @@ final class ClanekPresenter extends BasePresenter {
     public function createComponentArticleForm() {
         $form = new Component\ArticleForm(
             $this->entities,
-            new Model\CachedTags(
-                new Storages\MemoryStorage,
-                new Model\SelectedTags(
-                    $this->entities,
-                    $this->article()->tags()->toArray()
-                )
+            new Component\Tags(
+                $this->entities,
+                new Model\CachedTags(
+                    new Storages\MemoryStorage,
+                    new Model\SelectedTags(
+                        $this->entities,
+                        $this->article()->tags()->toArray()
+                    )
+                ),
+                $this->tagColors
             )
         );
         $form->onSuccess[] = function(UI\Form $form) {
@@ -83,7 +90,18 @@ final class ClanekPresenter extends BasePresenter {
     }
 
     public function createComponentArticle() {
-        return new Component\Article($this->entities, $this->article());
+        return new Component\Article(
+            $this->entities,
+            $this->article(),
+            new Component\Tags(
+                $this->entities,
+                new Model\SelectedTags(
+                    $this->entities,
+                    $this->article()->tags()->toArray()
+                ),
+                $this->tagColors
+            )
+        );
     }
 
     public function createComponentDiscussion() {

@@ -16,6 +16,9 @@ final class ClankyPresenter extends BasePresenter {
     /** @var \Facedown\Model\Security\Cipher @inject */
     public $cipher;
 
+    /** @var \Facedown\Model\TagColors @inject */
+    public $tagColors;
+
     public function renderDefault(string $tag = null) {
         try {
             $this->template->selectedTag = $tag;
@@ -26,7 +29,10 @@ final class ClankyPresenter extends BasePresenter {
     }
 
     public function createComponentArticleForm() {
-        $form = new Component\ArticleForm($this->entities, new Fake\Tags);
+        $form = new Component\ArticleForm(
+            $this->entities,
+            new Component\Tags($this->entities, new Fake\Tags, new Fake\Colors)
+        );
         $form->onSuccess[] = function(UI\Form $form) {
             $this->articleFormSucceeded($form);
         };
@@ -83,9 +89,7 @@ final class ClankyPresenter extends BasePresenter {
                     new Model\ArticleTags($this->entities)
                 )
             ),
-            new Model\TagColors(
-                __DIR__ . '/../storage/tagColors.ini'
-            )
+            $this->tagColors
         );
     }
 
@@ -97,10 +101,15 @@ final class ClankyPresenter extends BasePresenter {
                     $this->getParameter('tag'),
                     $this->entities,
                     $this->articles()
-                )
+                ),
+                $this->tagColors
             );
         }
-        return new Component\Articles($this->entities, $this->articles());
+        return new Component\Articles(
+            $this->entities,
+            $this->articles(),
+            $this->tagColors
+        );
     }
 
     private function articles() {

@@ -17,7 +17,7 @@ final class ArticleForm extends BaseControl {
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Tags $tags
+        Tags $tags
     ) {
         parent::__construct();
         $this->entities = $entities;
@@ -48,12 +48,6 @@ final class ArticleForm extends BaseControl {
     }
 
     protected function createComponentTags() {
-        return new Tags(
-            $this->entities,
-            $this->tags,
-            new Model\TagColors(
-                __DIR__ . '/../storage/tagColors.ini'
-            )
-        );
+        return $this->tags;
     }
 }

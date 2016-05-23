@@ -9,14 +9,17 @@ use Nette\Security;
 final class Article extends BaseControl {
     private $entities;
     private $article;
+    private $tags;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Article $article
+        Model\Article $article,
+        Tags $tags
     ) {
         parent::__construct();
         $this->entities = $entities;
         $this->article = $article;
+        $this->tags = $tags;
     }
 
     protected function createTemplate() {
@@ -36,16 +39,7 @@ final class Article extends BaseControl {
     }
 
     protected function createComponentTags() {
-        return new Tags(
-            $this->entities,
-            new Model\SelectedTags(
-                $this->entities,
-                $this->article->tags()->toArray()
-            ),
-            new Model\TagColors(
-                __DIR__ . '/../storage/tagColors.ini'
-            )
-        );
+        return $this->tags;
     }
 }
 

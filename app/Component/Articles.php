@@ -10,14 +10,17 @@ use Nette\Application\UI,
 final class Articles extends BaseControl {
     private $entities;
     private $articles;
+    private $colors;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Articles $articles
+        Model\Articles $articles,
+        Model\Colors $colors
     ) {
         parent::__construct();
         $this->entities = $entities;
         $this->articles = $articles;
+        $this->colors = $colors;
     }
 
     public function createTemplate() {
@@ -36,7 +39,15 @@ final class Articles extends BaseControl {
         foreach($this->articles->iterate() as $article) {
             $components[$article->id()] = new Article(
                 $this->entities,
-                $article
+                $article,
+                new Tags(
+                    $this->entities,
+                    new Model\SelectedTags(
+                        $this->entities,
+                        $article->tags()->toArray()
+                    ),
+                    $this->colors
+                )
             );
         }
         return new UI\Multiplier(
