@@ -25,11 +25,4 @@ interface Colors {
      * @return Color
      */
     public function color(string $name): Color;
-
-    /**
-     * Does the color name exist?
-     * @param string $name
-     * @return bool
-     */
-    public function exists(string $name): bool;
 }

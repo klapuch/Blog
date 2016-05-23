@@ -59,7 +59,7 @@ final class TagColors implements Colors {
         );
     }
 
-    public function exists(string $name): bool {
+    private function exists(string $name): bool {
         $colors = array_filter(
             $this->iterate(),
             function (Color $color) use ($name) {

@@ -55,15 +55,6 @@ final class TagColors extends Tester\TestCase {
             (new Model\TagColors($this->preparedFilesystem()))
                 ->color('foo');
         }, \Facedown\Exception\ExistenceException::class, 'Barva foo neexistuje');
-        Assert::false(
-            (new Model\TagColors($this->preparedFilesystem()))->exists('foo')
-        );
-    }
-
-    public function testExistingColor() {
-        Assert::true(
-            (new Model\TagColors($this->preparedFilesystem()))->exists('OOP')
-        );
     }
 
     protected function preparedFilesystem() {
