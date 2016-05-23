@@ -3,7 +3,6 @@ declare(strict_types = 1);
 namespace Facedown\Model;
 
 use Facedown\Exception;
-use Nette\NotImplementedException;
 
 final class TagColors implements Colors {
     private $path;
