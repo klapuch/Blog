@@ -82,6 +82,9 @@ final class ClankyPresenter extends BasePresenter {
                     $this->entities,
                     new Model\ArticleTags($this->entities)
                 )
+            ),
+            new Model\TagColors(
+                __DIR__ . '/../storage/tagColors.ini'
             )
         );
     }

@@ -41,6 +41,9 @@ final class Article extends BaseControl {
             new Model\SelectedTags(
                 $this->entities,
                 $this->article->tags()->toArray()
+            ),
+            new Model\TagColors(
+                __DIR__ . '/../storage/tagColors.ini'
             )
         );
     }

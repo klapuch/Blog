@@ -1,5 +1,5 @@
 {if $tag->pinned()}
-    <span class="label label-default">
+    <span class="label label-default" style="background-color:{$color->print()|noescape}">
         <a class="no-link" href="{plink Clanky:default tag => (string)$tag}">
             {$tag}
         </a>

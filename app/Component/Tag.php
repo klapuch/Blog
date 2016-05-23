@@ -10,19 +10,23 @@ use Nette\Application\UI,
 final class Tag extends BaseControl {
     private $entities;
     private $tag;
+    private $color;
 
     public function __construct(
         Doctrine\EntityManager $entities,
-        Model\Tag $tag
+        Model\Tag $tag,
+        Model\Color $color
     ) {
         parent::__construct();
         $this->entities = $entities;
         $this->tag = $tag;
+        $this->color = $color;
     }
 
     protected function createTemplate() {
         $template = parent::createTemplate();
         $template->tag = $this->tag;
+        $template->color = $this->color;
         return $template;
     }
 

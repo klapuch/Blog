@@ -48,6 +48,12 @@ final class ArticleForm extends BaseControl {
     }
 
     protected function createComponentTags() {
-        return new Tags($this->entities, $this->tags);
+        return new Tags(
+            $this->entities,
+            $this->tags,
+            new Model\TagColors(
+                __DIR__ . '/../storage/tagColors.ini'
+            )
+        );
     }
 }
