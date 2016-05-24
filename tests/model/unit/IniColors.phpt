@@ -50,11 +50,12 @@ final class IniColors extends Tester\TestCase {
         Assert::equal(new Model\HexColor('OOP', '#abcdef'), $color);
     }
 
+    /**
+     * @throws \Facedown\Exception\ExistenceException Název barvy foo neexistuje
+     */
     public function testUnknownColor() {
-        Assert::exception(function () {
-            (new Model\IniColors($this->preparedFilesystem()))
-                ->color('foo');
-        }, \Facedown\Exception\ExistenceException::class, 'Název barvy foo neexistuje');
+        (new Model\IniColors($this->preparedFilesystem()))
+            ->color('foo');
     }
 
     protected function preparedFilesystem() {
