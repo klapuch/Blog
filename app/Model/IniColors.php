@@ -4,7 +4,7 @@ namespace Facedown\Model;
 
 use Facedown\Exception;
 
-final class TagColors implements Colors {
+final class IniColors implements Colors {
     private $path;
     const PARSE_SECTIONS = false;
     const PRESERVE_TYPES = INI_SCANNER_TYPED;

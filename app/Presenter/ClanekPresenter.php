@@ -10,8 +10,8 @@ use Nette\Security,
     Nette\Caching\Storages;
 
 final class ClanekPresenter extends BasePresenter {
-    /** @var \Facedown\Model\TagColors @inject */
-    public $tagColors;
+    /** @var \Facedown\Model\IniColors @inject */
+    public $iniColors;
 
     public function renderDefault(int $id) {
         $article = $this->article();
@@ -41,7 +41,7 @@ final class ClanekPresenter extends BasePresenter {
                         $this->article()->tags()->toArray()
                     )
                 ),
-                $this->tagColors
+                $this->iniColors
             )
         );
         $form->onSuccess[] = function(UI\Form $form) {
@@ -99,7 +99,7 @@ final class ClanekPresenter extends BasePresenter {
                     $this->entities,
                     $this->article()->tags()->toArray()
                 ),
-                $this->tagColors
+                $this->iniColors
             )
         );
     }

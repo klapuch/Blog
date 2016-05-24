@@ -39,7 +39,7 @@ services:
     identity: @Facedown\Model\Access\IdentityFactory::create()
     bcrypt: Facedown\Model\Security\Bcrypt
     authenticator: Facedown\Model\Access\Authenticator
-    tagColors: Facedown\Model\TagColors(%storage%/tagColors.ini)
+    iniColors: Facedown\Model\IniColors(%storage%/tagColors.ini)
     - Nette\Security\Passwords
     - Facedown\Model\Access\IdentityFactory
     latte.latteFactory:

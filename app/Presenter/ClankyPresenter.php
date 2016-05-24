@@ -16,8 +16,8 @@ final class ClankyPresenter extends BasePresenter {
     /** @var \Facedown\Model\Security\Cipher @inject */
     public $cipher;
 
-    /** @var \Facedown\Model\TagColors @inject */
-    public $tagColors;
+    /** @var \Facedown\Model\IniColors @inject */
+    public $iniColors;
 
     public function renderDefault(string $tag = null) {
         try {
@@ -89,7 +89,7 @@ final class ClankyPresenter extends BasePresenter {
                     new Model\ArticleTags($this->entities)
                 )
             ),
-            $this->tagColors
+            $this->iniColors
         );
     }
 
@@ -102,13 +102,13 @@ final class ClankyPresenter extends BasePresenter {
                     $this->entities,
                     $this->articles()
                 ),
-                $this->tagColors
+                $this->iniColors
             );
         }
         return new Component\Articles(
             $this->entities,
             $this->articles(),
-            $this->tagColors
+            $this->iniColors
         );
     }
 

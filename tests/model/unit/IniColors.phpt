@@ -12,9 +12,9 @@ use Facedown\Model\Fake;
 
 require __DIR__ . '/../../bootstrap.php';
 
-final class TagColors extends Tester\TestCase {
+final class IniColors extends Tester\TestCase {
     public function testIterating() {
-        $colors = (new Model\TagColors($this->preparedFilesystem()))->iterate();
+        $colors = (new Model\IniColors($this->preparedFilesystem()))->iterate();
         Assert::same(2, count($colors));
         Assert::same('OOP', $colors[0]->name());
         Assert::same('#abcdef', $colors[0]->print());
@@ -24,7 +24,7 @@ final class TagColors extends Tester\TestCase {
 
     public function testAdding() {
         $ini = $this->preparedFilesystem();
-        (new Model\TagColors($ini))
+        (new Model\IniColors($ini))
             ->add(new Fake\Color('security', '#000000'));
         Assert::same(
             [
@@ -40,19 +40,19 @@ final class TagColors extends Tester\TestCase {
      * @throws \Facedown\Exception\DuplicateException Barva OOP již existuje
      */
     public function testAddingDuplication() {
-        (new Model\TagColors($this->preparedFilesystem()))
+        (new Model\IniColors($this->preparedFilesystem()))
             ->add(new Fake\Color('OOP', '#ffffff'));
     }
 
     public function testGivingKnownColor() {
-        $color = (new Model\TagColors($this->preparedFilesystem()))
+        $color = (new Model\IniColors($this->preparedFilesystem()))
             ->color('OOP');
         Assert::equal(new Model\HexColor('OOP', '#abcdef'), $color);
     }
 
     public function testUnknownColor() {
         Assert::exception(function () {
-            (new Model\TagColors($this->preparedFilesystem()))
+            (new Model\IniColors($this->preparedFilesystem()))
                 ->color('foo');
         }, \Facedown\Exception\ExistenceException::class, 'Barva foo neexistuje');
     }
@@ -66,4 +66,4 @@ final class TagColors extends Tester\TestCase {
 }
 
 
-(new TagColors())->run();
+(new IniColors())->run();
