@@ -31,7 +31,7 @@ final class IniColors implements Colors {
     public function add(Color $color): Color {
         if ($this->exists($color->name())) {
             throw new Exception\DuplicateException(
-                sprintf('Barva %s již existuje', $color->name())
+                sprintf('Název barvy %s již existuje', $color->name())
             );
         }
         file_put_contents(
@@ -45,7 +45,7 @@ final class IniColors implements Colors {
     public function color(string $name): Color {
         if(!$this->exists($name)) {
             throw new Exception\ExistenceException(
-                sprintf('Barva %s neexistuje', $name)
+                sprintf('Název barvy %s neexistuje', $name)
             );
         }
         return current(

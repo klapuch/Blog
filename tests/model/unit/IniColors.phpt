@@ -37,7 +37,7 @@ final class IniColors extends Tester\TestCase {
     }
 
     /**
-     * @throws \Facedown\Exception\DuplicateException Barva OOP již existuje
+     * @throws \Facedown\Exception\DuplicateException Název barvy OOP již existuje
      */
     public function testAddingDuplication() {
         (new Model\IniColors($this->preparedFilesystem()))
@@ -54,7 +54,7 @@ final class IniColors extends Tester\TestCase {
         Assert::exception(function () {
             (new Model\IniColors($this->preparedFilesystem()))
                 ->color('foo');
-        }, \Facedown\Exception\ExistenceException::class, 'Barva foo neexistuje');
+        }, \Facedown\Exception\ExistenceException::class, 'Název barvy foo neexistuje');
     }
 
     protected function preparedFilesystem() {
