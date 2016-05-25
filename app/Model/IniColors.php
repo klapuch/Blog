@@ -19,7 +19,7 @@ final class IniColors implements Colors {
             self::PARSE_SECTIONS,
             self::PRESERVE_TYPES
         );
-        return (array)array_reduce(
+        return array_reduce(
             array_keys($colors),
             function($previous, string $name) use($colors) {
                 $previous[] = new HexColor($name, $colors[$name]);
