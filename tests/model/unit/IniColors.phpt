@@ -16,8 +16,10 @@ final class IniColors extends Tester\TestCase {
     public function testIterating() {
         $colors = (new Model\IniColors($this->preparedFilesystem()))->iterate();
         Assert::same(2, count($colors));
+        Assert::type(Model\UnspecifiedColor::class, $colors[0]);
         Assert::same('OOP', $colors[0]->name());
         Assert::same('#abcdef', $colors[0]->print());
+        Assert::type(Model\UnspecifiedColor::class, $colors[1]);
         Assert::same('Clean Code', $colors[1]->name());
         Assert::same('#123456', $colors[1]->print());
     }
@@ -47,7 +49,7 @@ final class IniColors extends Tester\TestCase {
     public function testGivingKnownColor() {
         $color = (new Model\IniColors($this->preparedFilesystem()))
             ->color('OOP');
-        Assert::equal(new Model\HexColor('OOP', '#abcdef'), $color);
+        Assert::equal(new Model\UnspecifiedColor('OOP', '#abcdef'), $color);
     }
 
     /**
