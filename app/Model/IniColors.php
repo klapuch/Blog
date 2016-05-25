@@ -22,7 +22,7 @@ final class IniColors implements Colors {
         return array_reduce(
             array_keys($colors),
             function($previous, string $name) use($colors) {
-                $previous[] = new HexColor($name, $colors[$name]);
+                $previous[] = new UnspecifiedColor($name, $colors[$name]);
                 return $previous;
             }
         );
