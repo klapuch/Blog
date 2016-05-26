@@ -18,6 +18,7 @@ interface Slug {
     /**
      * Rename current slug and keep origin (ID) still the same
      * @param string $slug
+     * @throws \InvalidArgumentException
      * @return Slug
      */
     public function rename(string $slug): self;
