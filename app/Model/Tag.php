@@ -13,6 +13,7 @@ interface Tag {
 
     /**
      * Unpin the current tag from the target
+     * @return void
      */
     public function unpin();
 
