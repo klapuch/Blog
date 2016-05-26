@@ -36,7 +36,11 @@ final class SelectedTags extends Nette\Object implements Tags {
             }
             $this->entities->flush();
         } catch(UniqueConstraintViolationException $ex) {
-            throw new Exception\DuplicateException('Tag již existuje');
+            throw new Exception\DuplicateException(
+                'Tag již existuje',
+                $ex->getCode(),
+                $ex
+            );
         }
     }
 

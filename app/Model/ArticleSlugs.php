@@ -48,7 +48,11 @@ final class ArticleSlugs extends Nette\Object implements Slugs {
             $this->entities->flush();
             return $slug;
         } catch(UniqueConstraintViolationException $ex) {
-            throw new DuplicateException('Tento slug již existuje');
+            throw new DuplicateException(
+                'Tento slug již existuje',
+                $ex->getCode(),
+                $ex
+            );
         }
     }
 }

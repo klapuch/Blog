@@ -28,7 +28,9 @@ final class NewestArticles extends Nette\Object implements Articles {
                 sprintf(
                     'Titulek %s již existuje',
                     $article->title()
-                )
+                ),
+                $ex->getCode(),
+                $ex
             );
         }
     }

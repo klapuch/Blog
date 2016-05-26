@@ -28,7 +28,9 @@ final class Users extends Nette\Object {
                 sprintf(
                     'Uživatelské jméno %s již existuje',
                     $user->username()
-                )
+                ),
+                $ex->getCode(),
+                $ex
             );
         }
     }
