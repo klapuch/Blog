@@ -39,7 +39,12 @@ services:
     identity: @Facedown\Model\Access\IdentityFactory::create()
     bcrypt: Facedown\Model\Security\Bcrypt
     authenticator: Facedown\Model\Access\Authenticator
-    iniColors: Facedown\Model\IniColors(%storage%/tagColors.ini)
+    typedIni: Klapuch\Ini\Typed(%storage%/tagColors.ini)
+    validIni:
+        class: Klapuch\Ini\Valid
+        arguments: [%storage%/tagColors.ini, @typedIni]
+        autowired: no
+    iniColors: Facedown\Model\IniColors(@validIni)
     - Nette\Security\Passwords
     - Facedown\Model\Access\IdentityFactory
     latte.latteFactory:

@@ -3,22 +3,19 @@ declare(strict_types = 1);
 namespace Facedown\Model;
 
 use Facedown\Exception;
+use Klapuch\Ini;
 
 final class IniColors implements Colors {
-    private $path;
+    private $ini;
     const PARSE_SECTIONS = false;
     const PRESERVE_TYPES = INI_SCANNER_TYPED;
 
-    public function __construct(string $path) {
-        $this->path = $path;
+    public function __construct(Ini\Ini $ini) {
+        $this->ini = $ini;
     }
 
     public function iterate(): array {
-        $colors = parse_ini_file(
-            $this->path,
-            self::PARSE_SECTIONS,
-            self::PRESERVE_TYPES
-        );
+        $colors = $this->ini->read();
         return array_reduce(
             array_keys($colors),
             function($previous, string $name) use($colors) {
@@ -34,11 +31,7 @@ final class IniColors implements Colors {
                 sprintf('Název barvy %s již existuje', $color->name())
             );
         }
-        file_put_contents(
-            $this->path,
-            sprintf("%s=%s\r\n", $color->name(), $color->print()),
-            FILE_APPEND
-        );
+        $this->ini->write([$color->name() => $color->print()]);
         return $color;
     }
 

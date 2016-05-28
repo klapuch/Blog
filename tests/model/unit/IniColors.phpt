@@ -9,12 +9,15 @@ use Tester,
     Tester\Assert;
 use Facedown\Model;
 use Facedown\Model\Fake;
+use Klapuch\Ini;
 
 require __DIR__ . '/../../bootstrap.php';
 
 final class IniColors extends Tester\TestCase {
     public function testIterating() {
-        $colors = (new Model\IniColors($this->preparedFilesystem()))->iterate();
+        $colors = (new Model\IniColors(new Ini\Fake(
+            ['OOP' => '#abcdef', 'Clean Code' => '#123456']
+        )))->iterate();
         Assert::same(2, count($colors));
         Assert::type(Model\UnspecifiedColor::class, $colors[0]);
         Assert::same('OOP', $colors[0]->name());
@@ -25,16 +28,17 @@ final class IniColors extends Tester\TestCase {
     }
 
     public function testAdding() {
-        $ini = $this->preparedFilesystem();
-        (new Model\IniColors($ini))
-            ->add(new Fake\Color('security', '#000000'));
+        $ini = new Ini\Fake(
+            ['OOP' => '#abcdef', 'Clean Code' => '#123456']
+        );
+        (new Model\IniColors($ini))->add(new Fake\Color('security', '#000000'));
         Assert::same(
             [
                 'OOP' => '#abcdef',
                 'Clean Code' => '#123456',
                 'security' => '#000000',
             ],
-            parse_ini_file($ini)
+            $ini->read()
         );
     }
 
@@ -42,13 +46,15 @@ final class IniColors extends Tester\TestCase {
      * @throws \Facedown\Exception\DuplicateException Název barvy OOP již existuje
      */
     public function testAddingDuplication() {
-        (new Model\IniColors($this->preparedFilesystem()))
-            ->add(new Fake\Color('OOP', '#ffffff'));
+        (new Model\IniColors(new Ini\Fake(
+            ['OOP' => '#abcdef', 'Clean Code' => '#123456']
+        )))->add(new Fake\Color('OOP', '#ffffff'));
     }
 
     public function testGivingKnownColor() {
-        $color = (new Model\IniColors($this->preparedFilesystem()))
-            ->color('OOP');
+        $color = (new Model\IniColors(new Ini\Fake(
+            ['OOP' => '#abcdef', 'Clean Code' => '#123456']
+        )))->color('OOP');
         Assert::equal(new Model\UnspecifiedColor('OOP', '#abcdef'), $color);
     }
 
@@ -56,15 +62,9 @@ final class IniColors extends Tester\TestCase {
      * @throws \Facedown\Exception\ExistenceException Název barvy foo neexistuje
      */
     public function testUnknownColor() {
-        (new Model\IniColors($this->preparedFilesystem()))
-            ->color('foo');
-    }
-
-    protected function preparedFilesystem() {
-        return Tester\FileMock::create(
-            "OOP = #abcdef\r\nClean Code = #123456\r\n",
-            'ini'
-        );
+        (new Model\IniColors(new Ini\Fake(
+            ['OOP' => '#abcdef', 'Clean Code' => '#123456']
+        )))->color('foo');
     }
 }
 
