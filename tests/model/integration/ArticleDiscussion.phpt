@@ -68,7 +68,7 @@ final class ArticleDiscussion extends TestCase\Database {
         $this->discussion->comment(4);
     }
 
-    public function testPosting() {
+    public function testPostingNewComment() {
         $comment = $this->discussion->post(
             new Model\ArticleComment(
                 'some new content',

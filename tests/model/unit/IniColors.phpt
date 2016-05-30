@@ -27,7 +27,7 @@ final class IniColors extends Tester\TestCase {
         Assert::same('#123456', $colors[1]->print());
     }
 
-    public function testAdding() {
+    public function testAddingToTheEnd() {
         $ini = new Ini\Fake(
             ['OOP' => '#abcdef', 'Clean Code' => '#123456']
         );
@@ -45,13 +45,13 @@ final class IniColors extends Tester\TestCase {
     /**
      * @throws \Facedown\Exception\DuplicateException Název barvy OOP již existuje
      */
-    public function testAddingDuplication() {
+    public function testAddingDuplicatedName() {
         (new Model\IniColors(new Ini\Fake(
             ['OOP' => '#abcdef', 'Clean Code' => '#123456']
         )))->add(new Fake\Color('OOP', '#ffffff'));
     }
 
-    public function testGivingKnownColor() {
+    public function testKnownColor() {
         $color = (new Model\IniColors(new Ini\Fake(
             ['OOP' => '#abcdef', 'Clean Code' => '#123456']
         )))->color('OOP');

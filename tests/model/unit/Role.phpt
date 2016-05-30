@@ -12,14 +12,14 @@ use Facedown\Model;
 require __DIR__ . '/../../bootstrap.php';
 
 final class Role extends Tester\TestCase {
-    public function testRank() {
+    public function testRanks() {
         Assert::same(3, (new Model\Role('creator'))->rank());
         Assert::same(2, (new Model\Role('administrator'))->rank());
         Assert::same(1, (new Model\Role('member'))->rank());
         Assert::same(-1, (new Model\Role('foo'))->rank());
     }
 
-    public function testName() {
+    public function testNames() {
         Assert::same('creator', (string)new Model\Role('creator'));
         Assert::same('administrator', (string)new Model\Role('administrator'));
         Assert::same('member', (string)new Model\Role('member'));

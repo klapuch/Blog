@@ -13,7 +13,7 @@ use Facedown\Model,
 require __DIR__ . '/../../bootstrap.php';
 
 final class ArticleTag extends Tester\TestCase {
-    public function testName() {
+    public function testNameWithoutChange() {
         $tag = new Model\ArticleTag('security   ');
         Assert::same('security   ', (string)$tag);
     }
@@ -27,11 +27,15 @@ final class ArticleTag extends Tester\TestCase {
 
     public function testUnpinning() {
         $tag = new Model\ArticleTag('some tag');
-        Assert::false($tag->pinned());
-        $tag->unpin();
-        Assert::false($tag->pinned());
         $tag->pin(new Fake\Article(1));
         Assert::true($tag->pinned());
+        $tag->unpin();
+        Assert::false($tag->pinned());
+    }
+
+    public function testUnpinningUnpinnedTag() {
+        $tag = new Model\ArticleTag('some tag');
+        Assert::false($tag->pinned());
         $tag->unpin();
         Assert::false($tag->pinned());
     }

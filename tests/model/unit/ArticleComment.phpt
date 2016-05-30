@@ -39,13 +39,12 @@ final class ArticleComment extends Tester\TestCase {
         $this->comment->erase();
         Assert::false($this->comment->visible());
     }
-
-    /**
-     * @throws \LogicException Komentář již nemůže být smazán
-     */
+    
     public function testErasingAlreadyErasedOne() {
         $this->comment->erase();
-        $this->comment->erase();
+        Assert::exception(function() {
+            $this->comment->erase();
+        }, \LogicException::class, 'Komentář již nemůže být smazán');
     }
 }
 
