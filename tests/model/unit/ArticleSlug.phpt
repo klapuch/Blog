@@ -27,7 +27,7 @@ final class ArticleSlug extends Tester\TestCase {
         );
     }
 
-    public function testRenaming() {
+    public function testRenamingWithoutChangingOrigin() {
         $slug = new Model\ArticleSlug(new Fake\Article(6), 'new-slug');
         Assert::same(6, $slug->origin());
         Assert::same('new-slug', (string)$slug);

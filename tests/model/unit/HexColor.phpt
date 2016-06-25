@@ -41,7 +41,7 @@ final class HexColor extends Tester\TestCase {
      * @dataProvider validColors
      */
     public function testValidColors($color) {
-        $name = 'weird color';
+        $name = 'name of the color';
         $hexColor = new Model\HexColor($name, $color);
         Assert::same($color, $hexColor->print());
         Assert::same($name, $hexColor->name());
@@ -52,7 +52,7 @@ final class HexColor extends Tester\TestCase {
      */
     public function testInvalidColors($color) {
         Assert::exception(function() use ($color) {
-            (new Model\HexColor('weird color', $color))->print();
+            (new Model\HexColor('name of the color', $color))->print();
         }, \InvalidArgumentException::class, 'Barva musí být v hex tvaru');
     }
 }

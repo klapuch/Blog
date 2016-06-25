@@ -52,12 +52,23 @@ final class ArticleSlugs extends TestCase\Database {
         Assert::same('bla-bla', (string)$slug);
     }
 
-    /**
-     * @throws \Facedown\Exception\DuplicateException Tento slug již existuje
-     */
-    public function testAddingDuplicate() {
-        $this->slugs->add(2, 'bla-bla');
+    public function testAddingDuplicatedSlugName() {
+        Assert::exception(
+            function() {
+                $this->slugs->add(3, 'bartitle');
+            }, \Facedown\Exception\DuplicateException::class,
+            'Tento slug již existuje'
+        );
+    }
+
+    public function testAddingDuplicatedOrigin() {
         $this->slugs->add(3, 'bla-bla');
+        Assert::exception(
+            function() {
+                $this->slugs->add(3, 'foo-bar');
+            }, \Facedown\Exception\DuplicateException::class,
+            'Tento slug již existuje'
+        );
     }
 }
 

@@ -55,7 +55,7 @@ final class NewestArticles extends TestCase\Database {
         Assert::same($articles[2]->id(), 3);
     }
 
-    public function testPublishing() {
+    public function testPublishingNewArticle() {
         $publishedArticle = $this->articles->publish(
             new Model\Article(
                 'newTitle',
@@ -76,7 +76,7 @@ final class NewestArticles extends TestCase\Database {
     /**
      * @throws \Facedown\Exception\DuplicateException Titulek newTitle již existuje
      */
-    public function testPublishingDuplicate() {
+    public function testPublishingDuplicatedTitle() {
         $this->articles->publish(
             new Model\Article('newTitle',
                 'newContent',

@@ -23,7 +23,7 @@ final class ImportantInbox extends TestCase\Database {
         $this->inbox = new Post\ImportantInbox($this->entities);
     }
 
-    public function testReceiving() {
+    public function testReceivingNewMessage() {
         $message = $this->inbox->receive(
             new Post\Message('ssubject', 'ccontent', 'ssender')
         );
