@@ -4,7 +4,12 @@ php:
   - 7.0
 
 env:
-  - TESTER_PHP_BIN="php-cgi"
+  - PHP_BIN="php-cgi"
+
+matrix:
+    include:
+        - php: 7.0
+          env: coverage="--coverage ./coverage.xml --coverage-src ./App" PHP_BIN=phpdbg
 
 before_install:
   - composer self-update
@@ -14,8 +19,20 @@ install:
 
 before_script:
   - mysql -u root -e 'CREATE DATABASE facedown;'
-  #- mysql -u root facedown < tests/dump.sql
-  #- mysql -u root facedown < tests/dataset.sql
+
+after_script:
+    - >
+      if [ "$coverage" != "" ]; then
+      wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
+      && php coveralls.phar --verbose --config tests/.coveralls.yml
+      || true; fi
 
 script:
-  - ./vendor/bin/tester -p $TESTER_PHP_BIN -o console -c ./tests/php.ini -s ./tests/
+  - ./vendor/bin/tester -p $PHP_BIN -o console -s $coverage ./tests/
+
+after_failure:
+  - for i in $(find tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done
+
+cache:
+    directories:
+      - $HOME/.composer/cache

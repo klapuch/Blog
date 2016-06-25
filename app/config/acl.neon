@@ -27,6 +27,7 @@ services:
             - addResource(message)
             - addResource(articleForm-form)
             - addResource(articleForm-tags-tags)
+            - addResource(Tagy)
 
             - deny(guest, Clanky, pridani)
             - deny(guest, Clanek, editace)
@@ -36,6 +37,7 @@ services:
             - deny(guest, message)
             - deny(guest, articleForm-form)
             - deny(guest, articleForm-tags-tags)
+            - deny(guest, Tagy)
 
             - allow(creator)
             - allow(administrator)
