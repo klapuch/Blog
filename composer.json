@@ -27,7 +27,7 @@
     "psr-4": {
       "Facedown\\": [
           "app",
-          "TestCase"
+          "tests"
       ]
     }
   }
