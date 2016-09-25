@@ -21,14 +21,14 @@ before_script:
   - mysql -u root -e 'CREATE DATABASE facedown;'
 
 after_script:
-    - >
-        if [ "$coverage" != "" ]; then
-        wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
-        && php coveralls.phar --verbose --config Tests/.coveralls.yml
-        || true; fi
+  - >
+    if [ "$coverage" != "" ]; then
+    wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
+    && php coveralls.phar --verbose --config tests/.coveralls.yml
+    || true; fi
 
 script:
-    - ./vendor/bin/tester -p $PHP_BIN -d extension=xdebug.so -o console -s $coverage ./tests/
+  - ./vendor/bin/tester -p $PHP_BIN -d extension=xdebug.so -o console -s $coverage ./tests/
 
 after_failure:
   - for i in $(find tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done
